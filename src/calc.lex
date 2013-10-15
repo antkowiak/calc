@@ -36,7 +36,7 @@ func_exp        [Ee][Xx][Pp][lf]?
 func_exp2       [Ee][Xx][Pp]2[lf]?
 func_sqrt       [Ss][Qq][Rr][Tt][lf]?
 func_cbrt       [Cc][Bb][Rr][Tt][lf]?
-func_abs        [Aa][Bb][Ss][lf]?
+func_abs        [f]?[Aa][Bb][Ss][lf]?
 func_floor      [Ff][Ll][Oo][Oo][Rr][lf]?
 func_ceil       [Cc][Ee][Ii][Ll][lf]?
 func_round      [Rr][Oo][Uu][Nn][Dd][lf]?
