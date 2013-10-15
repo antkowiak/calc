@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
     {
         char exp[512];
 
-        strcpy(exp, argv[1]);
+        strncpy(exp, argv[1], 512);
 
         int i = 2;
 
