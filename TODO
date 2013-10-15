@@ -2,4 +2,5 @@
   are widely used in spreadsheet applications, etc.
 * Add support for a list of expressions, and some associated functions....
   ex: sum({2,4,5,7}) = 18
+* Maybe change flex and bison to use c++ instead of C (?)
 
