@@ -13,24 +13,25 @@
 %token  PLUS MINUS TIMES DIVIDE POWER
 %token  COMMA
 %token  LEFT_PARENTHESIS RIGHT_PARENTHESIS
+%token  LEFT_BRACE RIGHT_BRACE
 %token  PI_VAL
-%token  SINE COSINE TANGENT
-%token  ARCSINE ARCCOSINE ARCTANGENT
-%token  LOGARITHM NATLOGARITHM EXPFUNC
-%token  SQUAREROOT ABSOLUTEVALUE
-%token  MORTGAGE
-%token  PMT_FUNC
+%token  FUNC_SIN FUNC_COS FUNC_TAN
+%token  FUNC_ASIN FUNC_ACOS FUNC_ATAN
+%token  FUNC_LOG FUNC_LN FUNC_EXP
+%token  FUNC_SQRT FUNC_ABS
+%token  FUNC_CEIL FUNC_FLOOR FUNC_ROUND
+%token  FUNC_MORT FUNC_PMT
 %token  END
 
 %left   PLUS MINUS
 %left   TIMES DIVIDE
 %left   PI_VAL
-%left   SINE COSINE TANGENT
-%left   ARCSINE ARCCOSINE ARCTANGENT
-%left   LOGARITHM NATLOGARITHM EXPFUNC
-%left   SQUAREROOT ABSOLUTEVALUE
-%left   MORTGAGE
-%left   PMT_FUNC
+%left   FUNC_SIN FUNC_COS FUNC_TAN
+%left   FUNC_ASIN FUNC_ACOS FUNC_ATAN
+%left   FUNC_LOG FUNC_LN FUNC_EXP
+%left   FUNC_SQRT FUNC_ABS
+%left   FUNC_CEIL FUNC_FLOOR FUNC_ROUND
+%left   FUNC_MORT FUNC_PMT
 %left   NEG
 %right  POWER
 
@@ -43,7 +44,7 @@ Input:
 
 Line:
           END
-        | Expression END    { printf("%f\n", $1); }
+        | Expression    END { printf("%f\n", $1); }
         ;
 
 Expression:
@@ -54,21 +55,24 @@ Expression:
         | Expression MINUS  Expression    { $$=$1-$3; }
         | Expression TIMES  Expression    { $$=$1*$3; }
         | Expression DIVIDE Expression    { $$=$1/$3; }
-        | SINE LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sin($3); }
-        | COSINE LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=cos($3); }
-        | TANGENT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tan($3); }
-        | ARCSINE LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=asin($3); }
-        | ARCCOSINE LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=acos($3); }
-        | ARCTANGENT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=atan($3); }
-        | LOGARITHM LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log10($3); }
-        | NATLOGARITHM LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log($3); }
-        | EXPFUNC LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=exp($3); }
-        | SQUAREROOT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sqrt($3); }
-        | ABSOLUTEVALUE LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=fabs($3); }
-        | MORTGAGE LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_mortgage($3, $5, $7); }
-        | PMT_FUNC LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
-        | PMT_FUNC LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
-        | PMT_FUNC LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, $11); }
+        | FUNC_SIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sin($3); }
+        | FUNC_COS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=cos($3); }
+        | FUNC_TAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tan($3); }
+        | FUNC_ASIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=asin($3); }
+        | FUNC_ACOS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=acos($3); }
+        | FUNC_ATAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=atan($3); }
+        | FUNC_LOG LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log10($3); }
+        | FUNC_LN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log($3); }
+        | FUNC_EXP LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=exp($3); }
+        | FUNC_SQRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sqrt($3); }
+        | FUNC_ABS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=fabs($3); }
+        | FUNC_FLOOR LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=floor($3); }
+        | FUNC_CEIL LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=ceil($3); }
+        | FUNC_ROUND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=round($3); }
+        | FUNC_MORT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_mort($3, $5, $7); }
+        | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
+        | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
+        | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, $11); }
         | MINUS Expression %prec NEG      { $$=-$2; }
         | Expression POWER Expression     { $$=pow($1,$3); }
         | LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=$2; }
@@ -108,7 +112,7 @@ void print_error(const char *msg)
     printf("\nerror: %s\n",msg);
 }
 
-TNumber calculate_mortgage(TNumber principal, TNumber interest_rate, TNumber num_years)
+TNumber calculate_mort(TNumber principal, TNumber interest_rate, TNumber num_years)
 {
     TNumber monthlyInterest = interest_rate / 12.0;
     int months = num_years * 12.0;

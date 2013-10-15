@@ -7,29 +7,30 @@
 %}
 
 white           [ \t]+
-
 digit           [0-9]
 integer         {digit}+
 exponant        [eE][+-]{integer}
-
 real            {integer}("."{integer})?{exponant}?
 pointreal       ("."{integer}){exponant}?
-
 pi              [Pp][Ii]
-sine            [Ss][Ii][Nn]
-cosine          [Cc][Oo][Ss]
-tangent         [Tt][Aa][Nn]
-arcsine         [Aa][Ss][Ii][Nn]
-arccosine       [Aa][Cc][Oo][Ss]
-arctangent      [Aa][Tt][Aa][Nn]
-logarithm       [Ll][Oo][Gg]
-natlogarithm    [Ll][Nn]
-expfunc         [Ee][Xx][Pp]
-squareroot      [Ss][Qq][Rr][Tt]
-absolutevalue   [Aa][Bb][Ss]
 
-mortgage        [Mm][Oo][Rr][Tt]
-pmtfunc         [Pp][Mm][Tt]
+func_sin        [Ss][Ii][Nn]
+func_cos        [Cc][Oo][Ss]
+func_tan        [Tt][Aa][Nn]
+func_asin       [Aa][Ss][Ii][Nn]
+func_acos       [Aa][Cc][Oo][Ss]
+func_atan       [Aa][Tt][Aa][Nn]
+func_log        [Ll][Oo][Gg]
+func_ln         [Ll][Nn]
+func_exp        [Ee][Xx][Pp]
+func_sqrt       [Ss][Qq][Rr][Tt]
+func_abs        [Aa][Bb][Ss]
+func_floor      [Ff][Ll][Oo][Oo][Rr]
+func_ceil       [Cc][Ee][Ii][Ll]
+func_round      [Rr][Oo][Uu][Nn][Dd]
+
+func_mort       [Mm][Oo][Rr][Tt]
+func_pmt        [Pp][Mm][Tt]
 
 factorial       {integer}!
 
@@ -60,21 +61,23 @@ factorial       {integer}!
 
 
 {pi}            return(PI_VAL);
-{sine}          return(SINE);
-{cosine}        return(COSINE);
-{tangent}       return(TANGENT);
-{arcsine}       return(ARCSINE);
-{arccosine}     return(ARCCOSINE);
-{arctangent}    return(ARCTANGENT);
 
-{logarithm}     return(LOGARITHM);
-{natlogarithm}  return(NATLOGARITHM);
-{expfunc}       return(EXPFUNC);
-{squareroot}    return(SQUAREROOT);
-{absolutevalue} return(ABSOLUTEVALUE);
-
-{mortgage}      return(MORTGAGE);
-{pmtfunc}       return(PMT_FUNC);
+{func_sin}      return(FUNC_SIN);
+{func_cos}      return(FUNC_COS);
+{func_tan}      return(FUNC_TAN);
+{func_asin}     return(FUNC_ASIN);
+{func_acos}     return(FUNC_ACOS);
+{func_atan}     return(FUNC_ATAN);
+{func_log}      return(FUNC_LOG);
+{func_ln}       return(FUNC_LN);
+{func_exp}      return(FUNC_EXP);
+{func_sqrt}     return(FUNC_SQRT);
+{func_abs}      return(FUNC_ABS);
+{func_floor}    return(FUNC_FLOOR);
+{func_ceil}     return(FUNC_CEIL);
+{func_round}    return(FUNC_ROUND);
+{func_mort}     return(FUNC_MORT);
+{func_pmt}      return(FUNC_PMT);
 
 "+"             return(PLUS);
 "-"             return(MINUS);
@@ -86,6 +89,9 @@ factorial       {integer}!
 
 "("             return(LEFT_PARENTHESIS);
 ")"             return(RIGHT_PARENTHESIS);
+
+"{"             return(LEFT_BRACE);
+"}"             return(RIGHT_BRACE);
 
 ","             return(COMMA);
 
