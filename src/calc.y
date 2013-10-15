@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <time.h>
 
 
 %}
@@ -23,7 +24,7 @@
 %token  FUNC_TGAMMA FUNC_LGAMMA
 %token  FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %token  FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
-%token  FUNC_MORT FUNC_PMT
+%token  FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
 %token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  END
 
@@ -39,7 +40,7 @@
 %left   FUNC_TGAMMA FUNC_LGAMMA
 %left   FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %left   FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
-%left   FUNC_MORT FUNC_PMT
+%left   FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
 %left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   NEG
 %right  POWER
@@ -108,6 +109,10 @@ Expression:
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, $11); }
+        | FUNC_RAND LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=calculate_rand(0); }
+        | FUNC_RAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_rand($3); }
+        | FUNC_SRAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_srand($3); }
+        | FUNC_TIME LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=calculate_time(); }
         | FUNC_EQ LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_eq($3, $5); }
         | FUNC_NE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ne($3, $5); }
         | FUNC_LT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_lt($3, $5); }
@@ -128,6 +133,8 @@ int yyerror(char *s)
 
 int main(int argc, char *argv[])
 {
+    srand(time(NULL));
+
     if (argc > 1)
     {
         char exp[512];
@@ -169,6 +176,25 @@ TNumber calculate_pmt(TNumber r, TNumber nper, TNumber pv, TNumber fv, TNumber t
     return(r * (fv + (q * pv))) / ((-1.0 + q) * (1.0 + r * (type)));
 }
 
+
+TNumber calculate_rand(TNumber a)
+{
+    if (a == 0.0)
+        return rand();
+
+    return rand() % ((long long)a);
+}
+
+TNumber calculate_srand(TNumber a)
+{
+    srand((unsigned)a);
+    return 1.0;
+}
+
+TNumber calculate_time()
+{
+    return (TNumber) time(NULL);
+}
 
 TNumber calculate_eq(TNumber a, TNumber b)
 {

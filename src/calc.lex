@@ -55,8 +55,11 @@ func_fmax       [Ff]?[Mm][Aa][Xx][lf]?
 func_fmin       [Ff]?[Mm][Ii][Nn][lf]?
 func_fma        [Ff][Mm][Aa][lf]?
 
-func_mort       [Mm][Oo][Rr][Tt]
+func_mort       ([Mm][Oo][Rr][Tt][Gg][Aa][Gg][Ee])|([Mm][Oo][Rr][Tt])
 func_pmt        [Pp][Mm][Tt]
+func_rand       ([Rr][Aa][Nn][Dd][Oo][Mm])|([Rr][Aa][Nn][Dd])
+func_srand      [Ss][Rr][Aa][Nn][Dd]
+func_time       [Tt][Ii][Mm][Ee]
 
 func_eq         ([Ee][Qq][Uu][Aa][Ll][Ss])|([Ee][Qq][Uu][Aa][Ll])|([Ee][Qq])
 func_ne         ([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll][Ss])|([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll])|([Nn][Ee])
@@ -138,6 +141,9 @@ factorial       {integer}!
 
 {func_mort}         return(FUNC_MORT);
 {func_pmt}          return(FUNC_PMT);
+{func_rand}         return(FUNC_RAND);
+{func_srand}        return(FUNC_SRAND);
+{func_time}         return(FUNC_TIME);
 
 {func_eq}           return(FUNC_EQ);
 {func_ne}           return(FUNC_NE);
