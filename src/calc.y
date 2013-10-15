@@ -24,6 +24,7 @@
 %token  FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %token  FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
 %token  FUNC_MORT FUNC_PMT
+%token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  END
 
 %left   PLUS MINUS
@@ -39,6 +40,7 @@
 %left   FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %left   FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
 %left   FUNC_MORT FUNC_PMT
+%left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   NEG
 %right  POWER
 
@@ -106,6 +108,12 @@ Expression:
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, $11); }
+        | FUNC_EQ LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_eq($3, $5); }
+        | FUNC_NE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ne($3, $5); }
+        | FUNC_LT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_lt($3, $5); }
+        | FUNC_LE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_le($3, $5); }
+        | FUNC_GT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_gt($3, $5); }
+        | FUNC_GE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ge($3, $5); }
         | MINUS Expression %prec NEG      { $$=-$2; }
         | Expression POWER Expression     { $$=powl($1,$3); }
         | LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=$2; }
@@ -161,4 +169,46 @@ TNumber calculate_pmt(TNumber r, TNumber nper, TNumber pv, TNumber fv, TNumber t
     return(r * (fv + (q * pv))) / ((-1.0 + q) * (1.0 + r * (type)));
 }
 
+
+TNumber calculate_eq(TNumber a, TNumber b)
+{
+    if (a == b)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_ne(TNumber a, TNumber b)
+{
+    if (a != b)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_lt(TNumber a, TNumber b)
+{
+    if (a < b)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_le(TNumber a, TNumber b)
+{
+    if (a <= b)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_gt(TNumber a, TNumber b)
+{
+    if (a > b)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_ge(TNumber a, TNumber b)
+{
+    if (a >= b)
+        return 1.0;
+    return 0.0;
+}
 

@@ -58,6 +58,13 @@ func_fma        [Ff][Mm][Aa][lf]?
 func_mort       [Mm][Oo][Rr][Tt]
 func_pmt        [Pp][Mm][Tt]
 
+func_eq         ([Ee][Qq][Uu][Aa][Ll][Ss])|([Ee][Qq][Uu][Aa][Ll])|([Ee][Qq])
+func_ne         ([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll][Ss])|([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll])|([Nn][Ee])
+func_lt         ([Ll][Ee][Ss][Ss][Tt][Hh][Aa][Nn])|([Ll][Tt])
+func_le         ([Ll][Ee][Ss][Ss][Tt][Hh][Aa][Nn][Oo][Rr][Ee][Qq][Uu][Aa][Ll])|([Ll][Ee])
+func_gt         ([Gg][Rr][Ee][Aa][Tt][Ee][Rr][Tt][Hh][Aa][Nn])|([Gg][Tt])
+func_ge         ([Gg][Rr][Ee][Aa][Tt][Ee][Rr][Tt][Hh][Aa][Nn][Oo][Rr][Ee][Qq][Uu][Aa][Ll])|([Gg][Ee])
+
 factorial       {integer}!
 
 %%
@@ -131,6 +138,13 @@ factorial       {integer}!
 
 {func_mort}         return(FUNC_MORT);
 {func_pmt}          return(FUNC_PMT);
+
+{func_eq}           return(FUNC_EQ);
+{func_ne}           return(FUNC_NE);
+{func_lt}           return(FUNC_LT);
+{func_le}           return(FUNC_LE);
+{func_gt}           return(FUNC_GT);
+{func_ge}           return(FUNC_GE);
 
 "+"                 return(PLUS);
 "-"                 return(MINUS);
