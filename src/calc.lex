@@ -67,6 +67,10 @@ func_lt         ([Ll][Ee][Ss][Ss][Tt][Hh][Aa][Nn])|([Ll][Tt])
 func_le         ([Ll][Ee][Ss][Ss][Tt][Hh][Aa][Nn][Oo][Rr][Ee][Qq][Uu][Aa][Ll])|([Ll][Ee])
 func_gt         ([Gg][Rr][Ee][Aa][Tt][Ee][Rr][Tt][Hh][Aa][Nn])|([Gg][Tt])
 func_ge         ([Gg][Rr][Ee][Aa][Tt][Ee][Rr][Tt][Hh][Aa][Nn][Oo][Rr][Ee][Qq][Uu][Aa][Ll])|([Gg][Ee])
+func_true       [Tt][Rr][Uu][Ee]
+func_false      [Ff][Aa][Ll][Ss][Ee]
+func_zero       [Zz][Ee][Rr][Oo]
+func_one        [Oo][Nn][Ee]
 
 factorial       {integer}!
 
@@ -151,6 +155,10 @@ factorial       {integer}!
 {func_le}           return(FUNC_LE);
 {func_gt}           return(FUNC_GT);
 {func_ge}           return(FUNC_GE);
+{func_true}         return(FUNC_TRUE);
+{func_false}        return(FUNC_FALSE);
+{func_zero}         return(FUNC_ZERO);
+{func_one}          return(FUNC_ONE);
 
 "+"                 return(PLUS);
 "-"                 return(MINUS);
