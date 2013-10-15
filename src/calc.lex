@@ -1,6 +1,6 @@
 %{
 #include "global.h"
-#include "calc.h"
+#include "calc.tab.h"
 
 #include <stdlib.h>
 
