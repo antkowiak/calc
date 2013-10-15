@@ -1,0 +1,7 @@
+* Add more functions that might be useful.  Perhaps some more financial functions, functions that
+  are widely used in spreadsheet applications, etc.
+* Add support for a list of expressions, and some associated functions....
+  ex: sum({2,4,5,7}) = 18
+* Add support for equality and comparisons:
+  ex:  (3 <= PI)  = true
+
