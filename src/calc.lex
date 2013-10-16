@@ -60,6 +60,14 @@ func_pmt        [Pp][Mm][Tt]
 func_rand       ([Rr][Aa][Nn][Dd][Oo][Mm])|([Rr][Aa][Nn][Dd])
 func_srand      [Ss][Rr][Aa][Nn][Dd]
 func_time       [Tt][Ii][Mm][Ee]
+func_npr        [Nn][Pp][Rr]
+func_ncr        [Nn][Cc][Rr]
+func_deg2rad    [Dd][Ee][Gg]2[Rr][Aa][Dd]
+func_rad2deg    [Rr][Aa][Dd]2[Dd][Ee][Gg]
+func_gcd        [Gg][Cc][Dd]
+func_lcm        [Ll][Cc][Mm]
+func_even       [Ee][Vv][Ee][Nn]
+func_odd        [Oo][Dd][Dd]
 
 func_eq         ([Ee][Qq][Uu][Aa][Ll][Ss])|([Ee][Qq][Uu][Aa][Ll])|([Ee][Qq])
 func_ne         ([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll][Ss])|([Nn][Oo][Tt][Ee][Qq][Uu][Aa][Ll])|([Nn][Ee])
@@ -148,6 +156,14 @@ factorial       {integer}!
 {func_rand}         return(FUNC_RAND);
 {func_srand}        return(FUNC_SRAND);
 {func_time}         return(FUNC_TIME);
+{func_npr}          return(FUNC_NPR);
+{func_ncr}          return(FUNC_NCR);
+{func_deg2rad}      return(FUNC_DEG2RAD);
+{func_rad2deg}      return(FUNC_RAD2DEG);
+{func_gcd}          return(FUNC_GCD);
+{func_lcm}          return(FUNC_LCM);
+{func_even}         return(FUNC_EVEN);
+{func_odd}          return(FUNC_ODD);
 
 {func_eq}           return(FUNC_EQ);
 {func_ne}           return(FUNC_NE);

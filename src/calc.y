@@ -27,6 +27,8 @@
 %token  FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
 %token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
+%token  FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
+%token  FUNC_EVEN FUNC_ODD
 %token  END
 
 %left   PLUS MINUS
@@ -44,6 +46,8 @@
 %left   FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
 %left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
+%left   FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
+%left   FUNC_EVEN FUNC_ODD
 %left   NEG
 %right  POWER
 
@@ -115,6 +119,14 @@ Expression:
         | FUNC_RAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_rand($3); }
         | FUNC_SRAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_srand($3); }
         | FUNC_TIME LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=calculate_time(); }
+        | FUNC_NPR LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_npr($3, $5); }
+        | FUNC_NCR LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ncr($3, $5); }
+        | FUNC_DEG2RAD LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_deg2rad($3); }
+        | FUNC_RAD2DEG LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_rad2deg($3); }
+        | FUNC_GCD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_gcd($3, $5); }
+        | FUNC_LCM LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_lcm($3, $5); }
+        | FUNC_EVEN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_even($3); }
+        | FUNC_ODD LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_odd($3); }
         | FUNC_EQ LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_eq($3, $5); }
         | FUNC_NE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ne($3, $5); }
         | FUNC_LT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_lt($3, $5); }
@@ -166,6 +178,20 @@ void print_error(const char *msg)
     printf("\nerror: %s\n",msg);
 }
 
+TNumber calculate_factorial(TNumber n)
+{
+    long long returnVal = 1;
+    long long end = (long long) n;
+    long long i = 1;
+
+    for (i = 1 ; i <= end ; ++i)
+    {
+        returnVal = returnVal * i;
+    }
+
+    return (returnVal);
+}
+
 TNumber calculate_mort(TNumber principal, TNumber interest_rate, TNumber num_years)
 {
     TNumber monthlyInterest = interest_rate / 12.0;
@@ -201,6 +227,101 @@ TNumber calculate_time()
 {
     return (TNumber) time(NULL);
 }
+
+TNumber calculate_npr(TNumber n, TNumber r)
+{
+    unsigned long long ni = (unsigned long long) n;
+    unsigned long long ri = (unsigned long long) r;
+
+    if (ri > ni)
+        return calculate_factorial(ni);
+
+    unsigned long long total = 1;
+
+    unsigned long long i = ni;
+    for ( ; i > (ni - ri) ; --i)
+    {
+        total *= i;
+    }
+
+    return ((TNumber) total);
+}
+
+TNumber calculate_ncr(TNumber n, TNumber r)
+{
+    unsigned long long ni = (unsigned long long) n;
+    unsigned long long ri = (unsigned long long) r;
+
+    return ( (TNumber) (calculate_npr(ni, ri) / calculate_factorial(ri) ) );
+}
+
+TNumber calculate_deg2rad(TNumber deg)
+{
+    return ((deg * 3.141592654) / 180.0);
+}
+
+TNumber calculate_rad2deg(TNumber rad)
+{
+    return ((rad * 180.0) / 3.141592654);
+}
+
+TNumber calculate_gcd(TNumber a, TNumber b)
+{
+    long long imin = (long long) fminl(fabsl(a),fabsl(b));
+    long long imax = (long long) fmaxl(fabsl(a),fabsl(b));
+
+    if (imin==0 || imax==0)
+        return 0.0;
+
+    unsigned long long d = imin;
+    for ( ; d >= 1 ; --d)
+    {
+        if ( (imin % d == 0) && (imax % d == 0) )
+        {
+            return ( (TNumber) d);
+        }
+    }
+
+    return 1.0;
+}
+
+TNumber calculate_lcm(TNumber a, TNumber b)
+{
+    long long ai = (long long) a;
+    long long bi = (long long) b;
+
+    if (ai==0 || bi==0)
+        return 0.0;
+
+    long long multiple = ai;
+
+    while (multiple >= ai)
+    {
+        if (multiple % bi == 0)
+            return ((TNumber)multiple);
+
+        multiple += ai;
+    }
+
+    return 0.0;
+}
+
+TNumber calculate_even(TNumber n)
+{
+    long long val = (long long) n;
+    if (val % 2 == 0)
+        return 1.0;
+    return 0.0;
+}
+
+TNumber calculate_odd(TNumber n)
+{
+    long long val = (long long) n;
+    if (val % 2 == 1)
+        return 1.0;
+    return 0.0;
+}
+
 
 TNumber calculate_eq(TNumber a, TNumber b)
 {
