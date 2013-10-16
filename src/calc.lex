@@ -55,6 +55,8 @@ func_fmax       [Ff]?[Mm][Aa][Xx][lf]?
 func_fmin       [Ff]?[Mm][Ii][Nn][lf]?
 func_fma        [Ff][Mm][Aa][lf]?
 
+func_help       [Hh][Ee][Ll][Pp]
+func_quit       ([Ee][Xx][Ii][Tt])|([Qq][Uu][Ii][Tt])|([Qq])
 func_mort       ([Mm][Oo][Rr][Tt][Gg][Aa][Gg][Ee])|([Mm][Oo][Rr][Tt])
 func_pmt        [Pp][Mm][Tt]
 func_rand       ([Rr][Aa][Nn][Dd][Oo][Mm])|([Rr][Aa][Nn][Dd])
@@ -151,6 +153,8 @@ factorial       {integer}!
 {func_fmin}         return(FUNC_FMIN);
 {func_fma}          return(FUNC_FMA);
 
+{func_help}         return(FUNC_HELP);
+{func_quit}         return(FUNC_QUIT);
 {func_mort}         return(FUNC_MORT);
 {func_pmt}          return(FUNC_PMT);
 {func_rand}         return(FUNC_RAND);

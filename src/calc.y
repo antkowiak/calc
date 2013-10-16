@@ -28,7 +28,7 @@
 %token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %token  FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
-%token  FUNC_EVEN FUNC_ODD
+%token  FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
 %token  END
 
 %left   PLUS MINUS
@@ -47,7 +47,7 @@
 %left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %left   FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
-%left   FUNC_EVEN FUNC_ODD
+%left   FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
 %left   NEG
 %right  POWER
 
@@ -111,6 +111,8 @@ Expression:
         | FUNC_FMAX LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmaxl($3, $5); }
         | FUNC_FMIN LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fminl($3, $5); }
         | FUNC_FMA LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmal($3, $5, $7); }
+        | FUNC_HELP LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = calculate_help(); }
+        | FUNC_QUIT LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = calculate_quit(); }
         | FUNC_MORT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_mort($3, $5, $7); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
@@ -176,6 +178,21 @@ int main(int argc, char *argv[])
 void print_error(const char *msg)
 {
     printf("\nerror: %s\n",msg);
+}
+
+TNumber calculate_help()
+{
+    printf("Available functions: \n");
+    // TODO
+
+    return 0.0;
+}
+
+TNumber calculate_quit()
+{
+    printf("Goodbye\n");
+    exit(EXIT_SUCCESS);
+    return 0.0;
 }
 
 TNumber calculate_factorial(TNumber n)
