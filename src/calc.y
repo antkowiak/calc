@@ -149,6 +149,7 @@ Expression:
 int yyerror(char *s)
 {
     printf("\nerror: '%s'\n",s);
+    return 0;
 }
 
 int main(int argc, char *argv[])

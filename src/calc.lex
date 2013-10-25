@@ -84,6 +84,11 @@ func_one        [Oo][Nn][Ee]
 
 factorial       {integer}!
 
+k_metric        {real}[Kk]
+m_metric        {real}[Mm]
+b_metric        {real}[Bb]
+t_metric        {real}[Tt]
+
 %%
 
 {white}         {}
@@ -100,12 +105,36 @@ factorial       {integer}!
 
 {factorial}     {
                     yylval=1;
-                    unsigned int end = abs(atoi(yytext));
+                    unsigned long long end = abs(atoll(yytext));
                     int i=1;
                     for (i=1 ; i<=end ; ++i)
                     {
                         yylval = yylval * i;
                     }
+                    return(NUMBER);
+                }
+
+{k_metric}      {
+                    double dval = atof(yytext);
+                    yylval = dval * 1000.0;
+                    return(NUMBER);
+                }
+
+{m_metric}      {
+                    double dval = atof(yytext);
+                    yylval = dval * 1000000.0;
+                    return(NUMBER);
+                }
+
+{b_metric}      {
+                    double dval = atof(yytext);
+                    yylval = dval * 1000000000.0;
+                    return(NUMBER);
+                }
+
+{t_metric}      {
+                    double dval = atof(yytext);
+                    yylval = dval * 1000000000000.0;
                     return(NUMBER);
                 }
 
