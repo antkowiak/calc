@@ -8,6 +8,10 @@
 #include <time.h>
 
 
+int yylex(void);
+int yyerror(char *);
+void * yy_scan_string(char *);
+
 %}
 
 %token  NUMBER
