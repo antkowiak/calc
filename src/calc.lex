@@ -83,6 +83,7 @@ func_zero       [Zz][Ee][Rr][Oo]
 func_one        [Oo][Nn][Ee]
 
 factorial       {integer}!
+percentage      {real}\%
 
 k_metric        {real}[Kk]
 m_metric        {real}[Mm]
@@ -111,6 +112,12 @@ t_metric        {real}[Tt]
                     {
                         yylval = yylval * i;
                     }
+                    return(NUMBER);
+                }
+
+{percentage}    {
+                    double dval = atof(yytext);
+                    yylval = dval / 100.0;
                     return(NUMBER);
                 }
 
