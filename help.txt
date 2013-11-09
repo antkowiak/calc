@@ -1,0 +1,72 @@
+(x!)            - factorial
+(PI)            - pi (3.14159)
+(x^y)           - raise x to the power of 7
+(x+y)           - addition
+(x-y)           - subtraction
+(x*y)           - multiplication
+(x/y)           - division
+sin(x)          - sine function
+cos(x)          - cosine function
+tan(x)          - tangent function
+asin(x)         - arc sine function
+acos(x)         - arc cosine function
+atan(x)         - arc tangent function of one variable
+atan2(x,y)      - arc tangent function of two variables
+sinh(x)         - hyperbolic sine function
+cosh(x)         - hyperbolic cosine function
+tanh(x)         - hyperbolic tangent function
+asinh(x)        - inverse hyperbolic sine function
+acosh(x)        - inverse hyperbolic cosine function
+atanh(x)        - inverse hyperbolic tangent function
+log10(x)        - logarithm of x to base 10
+log2(x)         - logarithm of x to base 2
+log1p(x)        - natural logarithm of x with increased accuracy
+log(x)          - natural logarithm
+ln(x)           - natural logarithm
+exp(x)          - compute the base-e exponent of x (e**x)
+exp2(x)         - compute the base-2 exponent of x (2**x)
+sqrt(x)         - square root function
+cbrt(x)         - cube root function
+abs(x)          - absolute value function
+floor(x)        - round to largest integral value not greater than x
+ceil(x)         - round to smallest integral value not less than x
+round(x)        - round to integral value, regarldess of rounding direction
+hypot(x,y)      - euclidean distance function
+pow(x,y)        - power function
+tgamma(x)       - calculate the gamma function of x
+lgamma(x)       - calculate the nat log of the abs value of the gamma function
+trunc(x)        - truncate to integer value
+nearbyint(x)    - round to integral value in floating-point format
+fmod(x)         - floating point remainder function
+remainder(x,y)  - floating point remainder function
+fdim(x,y)       - return the difference if positive, 0 otherwise
+fmax(x,y)       - return maximum value
+fmin(x,y)       - return minimum value
+fma(x,y,z)      - multiple and add, then round
+mort(x,y,z)     - calculate mortgage
+pmt(x,y,z,a,b)  - loan payment function
+rand()          - random number
+rand(x)         - random number bounded by x
+srand(x)        - seed the random number generator
+time()          - return the current time in ms
+npr(x,y)        - compute permutations
+ncr(x,y)        - compute combinations
+deg2rad(x)      - convert degrees to radians
+rad2deg(x)      - convert radians to degrees
+gcd(x,y)        - compute greatest common divisor
+lcm(x,y)        - compute least common multiple
+even(x)         - returns 1 if x is even, 0 otherwise
+odd(x)          - returns 1 if x is odd, 0 otherwise
+eq(x,y)         - returns 1 if x is equal to y, 0 otherwise
+ne(x,y)         - returns 1 if x is not equal to y, 0 otherwise
+lt(x,y)         - returns 1 if x is less than y, 0 otherwise
+le(x,y)         - returns 1 if x is less than or equal to y, 0 otherwise
+gt(x,y)         - returns 1 if x is greater than y, 0 otherwise
+ge(x,y)         - returns 1 if x is greater than or equal to y, 0 otherwise
+true()          - returns 1
+false()         - returns 0
+zero()          - returns 0
+one()           - returns 1
+help()          - prints help message
+quit()          - exits the program
+
