@@ -33,6 +33,7 @@ void * yy_scan_string(char *);
 %token  FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %token  FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
 %token  FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
+%token  FUNC_F2C FUNC_C2F
 %token  END
 
 %left   PLUS MINUS
@@ -52,6 +53,7 @@ void * yy_scan_string(char *);
 %left   FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %left   FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
 %left   FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
+%left   FUNC_F2C FUNC_C2F
 %left   NEG
 %right  POWER
 
@@ -143,6 +145,8 @@ Expression:
         | FUNC_FALSE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=0.0; }
         | FUNC_ZERO LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=0.0; }
         | FUNC_ONE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=1.0; }
+        | FUNC_F2C LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_f2c($3); }
+        | FUNC_C2F LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_c2f($3); }
         | MINUS Expression %prec NEG      { $$=-$2; }
         | Expression POWER Expression     { $$=powl($1,$3); }
         | LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=$2; }
@@ -455,5 +459,15 @@ TNumber calculate_ge(TNumber a, TNumber b)
     if (a >= b)
         return 1.0;
     return 0.0;
+}
+
+TNumber calculate_f2c(TNumber f)
+{
+    return ( ( ( (f - 32.0) * 5) / 9) );
+}
+
+TNumber calculate_c2f(TNumber c)
+{
+    return ( ( ( (c * 9) / 5) + 32.0) );
 }
 

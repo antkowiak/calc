@@ -29,3 +29,5 @@ TNumber calculate_le(TNumber a, TNumber b);
 TNumber calculate_gt(TNumber a, TNumber b);
 TNumber calculate_ge(TNumber a, TNumber b);
 
+TNumber calculate_f2c(TNumber f);
+TNumber calculate_c2f(TNumber c);

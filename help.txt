@@ -67,6 +67,8 @@ true()          - returns 1
 false()         - returns 0
 zero()          - returns 0
 one()           - returns 1
+f2c(f)          - convert Farenheit to Celsius
+c2f(c)          - convert Celsius to Farenheit
 help()          - prints help message
 quit()          - exits the program
 

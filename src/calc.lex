@@ -82,6 +82,9 @@ func_false      [Ff][Aa][Ll][Ss][Ee]
 func_zero       [Zz][Ee][Rr][Oo]
 func_one        [Oo][Nn][Ee]
 
+func_f2c        [Ff]2[Cc]
+func_c2f        [Cc]2[Ff]
+
 factorial       {integer}!
 percentage      {real}\%
 
@@ -215,6 +218,9 @@ t_metric        {real}[Tt]
 {func_false}        return(FUNC_FALSE);
 {func_zero}         return(FUNC_ZERO);
 {func_one}          return(FUNC_ONE);
+
+{func_f2c}          return(FUNC_F2C);
+{func_c2f}          return(FUNC_C2F);
 
 "+"                 return(PLUS);
 "-"                 return(MINUS);
