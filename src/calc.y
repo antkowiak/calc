@@ -261,6 +261,8 @@ TNumber calculate_help()
     printf("false()         - returns 0\n");
     printf("zero()          - returns 0\n");
     printf("one()           - returns 1\n");
+    printf("f2c(f)          - convert Farenheit to Celsius\n");
+    printf("c2f(c)          - convert Celsius to Farenheit\n");
     printf("help()          - prints help message\n");
     printf("quit()          - exits the program\n");
 
