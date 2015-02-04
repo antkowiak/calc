@@ -10,6 +10,8 @@ TNumber calculate_quit();
 TNumber calculate_factorial(TNumber n);
 TNumber calculate_mort(TNumber principal, TNumber interest_rate, TNumber num_years);
 TNumber calculate_pmt(TNumber r, TNumber nper, TNumber pv, TNumber fv, TNumber type);
+TNumber calculate_ytm(TNumber couponRate, TNumber yearsToMaturity, TNumber parValue, TNumber price);
+TNumber calculate_ytm_helper(TNumber annualCouponPayment, TNumber yearsToMaturity, TNumber parValue, TNumber proposedRate);
 TNumber calculate_rand(TNumber a);
 TNumber calculate_srand(TNumber a);
 TNumber calculate_time();

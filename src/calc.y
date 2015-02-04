@@ -28,7 +28,7 @@ void * yy_scan_string(char *);
 %token  FUNC_TGAMMA FUNC_LGAMMA
 %token  FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %token  FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
-%token  FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
+%token  FUNC_MORT FUNC_PMT FUNC_YTM FUNC_RAND FUNC_SRAND FUNC_TIME
 %token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %token  FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
@@ -48,7 +48,7 @@ void * yy_scan_string(char *);
 %left   FUNC_TGAMMA FUNC_LGAMMA
 %left   FUNC_TRUNC FUNC_NEARBYINT FUNC_FMOD FUNC_REMAINDER FUNC_NEXTAFTER
 %left   FUNC_NEXTTOWARD FUNC_FDIM FUNC_FMAX FUNC_FMIN FUNC_FMA
-%left   FUNC_MORT FUNC_PMT FUNC_RAND FUNC_SRAND FUNC_TIME
+%left   FUNC_MORT FUNC_PMT FUNC_YTM FUNC_RAND FUNC_SRAND FUNC_TIME
 %left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %left   FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
@@ -123,6 +123,7 @@ Expression:
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, 0.0, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, 0.0); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_pmt($3, $5, $7, $9, $11); }
+        | FUNC_YTM LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_ytm($3, $5, $7, $9); }
         | FUNC_RAND LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=calculate_rand(0); }
         | FUNC_RAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_rand($3); }
         | FUNC_SRAND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_srand($3); }
@@ -239,6 +240,7 @@ TNumber calculate_help()
     printf("fma(x,y,z)      - multiple and add, then round\n");
     printf("mort(x,y,z)     - calculate mortgage\n");
     printf("pmt(x,y,z,a,b)  - loan payment function\n");
+    printf("ytm(c,n,p,prc)  - bond yield to maturity\n");
     printf("rand()          - random number\n");
     printf("rand(x)         - random number bounded by x\n");
     printf("srand(x)        - seed the random number generator\n");
@@ -306,6 +308,40 @@ TNumber calculate_pmt(TNumber r, TNumber nper, TNumber pv, TNumber fv, TNumber t
     return(r * (fv + (q * pv))) / ((-1.0 + q) * (1.0 + r * (type)));
 }
 
+TNumber calculate_ytm(TNumber couponRate, TNumber yearsToMaturity, TNumber parValue, TNumber price)
+{
+    TNumber yrs = roundl(yearsToMaturity);
+    TNumber annualCouponPayment = couponRate * parValue;
+    TNumber rateTry = couponRate;
+    TNumber rateLow = couponRate - 10.0;
+    TNumber rateHigh = couponRate + 10.0;
+    for (int i = 0 ; i < 100 ; ++i)
+    {
+        TNumber p = calculate_ytm_helper(annualCouponPayment, yrs, parValue, rateTry);
+        TNumber oldRateTry = rateTry;
+        if (p < price)
+        {
+            rateTry = (rateTry + rateLow) / 2.0;
+            rateHigh = oldRateTry;
+        }
+        else if (p > price)
+        {
+            rateTry = (rateTry + rateHigh) / 2.0;
+            rateLow = oldRateTry;
+        }
+    }
+    return rateTry;
+}
+
+TNumber calculate_ytm_helper(TNumber annualCouponPayment, TNumber yearsToMaturity, TNumber parValue, TNumber proposedRate)
+{
+    TNumber price = 0.0;
+    for (int i = 1 ; i <= yearsToMaturity ; ++i)
+        price += (annualCouponPayment * pow(proposedRate + 1, (i * -1)));
+
+    price += parValue * pow(proposedRate + 1, (yearsToMaturity * -1));
+    return price;
+}
 
 TNumber calculate_rand(TNumber a)
 {

@@ -59,6 +59,7 @@ func_help       [Hh][Ee][Ll][Pp]
 func_quit       ([Ee][Xx][Ii][Tt])|([Qq][Uu][Ii][Tt])|([Qq])
 func_mort       ([Mm][Oo][Rr][Tt][Gg][Aa][Gg][Ee])|([Mm][Oo][Rr][Tt])
 func_pmt        [Pp][Mm][Tt]
+func_ytm        [Yy][Tt][Mm]
 func_rand       ([Rr][Aa][Nn][Dd][Oo][Mm])|([Rr][Aa][Nn][Dd])
 func_srand      [Ss][Rr][Aa][Nn][Dd]
 func_time       [Tt][Ii][Mm][Ee]
@@ -196,6 +197,7 @@ t_metric        {real}[Tt]
 {func_quit}         return(FUNC_QUIT);
 {func_mort}         return(FUNC_MORT);
 {func_pmt}          return(FUNC_PMT);
+{func_ytm}          return(FUNC_YTM);
 {func_rand}         return(FUNC_RAND);
 {func_srand}        return(FUNC_SRAND);
 {func_time}         return(FUNC_TIME);
