@@ -1,6 +1,6 @@
 (x!)            - factorial
 (PI)            - pi (3.14159)
-(x^y)           - raise x to the power of 7
+(x^y)           - raise x to the power of y
 (x+y)           - addition
 (x-y)           - subtraction
 (x*y)           - multiplication
