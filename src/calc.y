@@ -195,7 +195,7 @@ TNumber calculate_help()
     printf("Available functions: \n");
     printf("(x!)            - factorial\n");
     printf("(PI)            - pi (3.14159)\n");
-    printf("(x^y)           - raise x to the power of 7\n");
+    printf("(x^y)           - raise x to the power of y\n");
     printf("(x+y)           - addition\n");
     printf("(x-y)           - subtraction\n");
     printf("(x*y)           - multiplication\n");
