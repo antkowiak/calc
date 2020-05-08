@@ -111,7 +111,7 @@ t_metric        {real}[Tt]
 {factorial}     {
                     yylval=1;
                     unsigned long long end = abs(atoll(yytext));
-                    int i=1;
+                    unsigned long long i=1;
                     for (i=1 ; i<=end ; ++i)
                     {
                         yylval = yylval * i;

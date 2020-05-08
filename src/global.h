@@ -1,6 +1,9 @@
 #define YYSTYPE double
 
+#include "arbnumber.h"
+
 typedef long double TNumber;
+//typedef rda::ArbNumber TNumber;
 
 void print_error(const char *msg);
 

@@ -8,9 +8,12 @@
 #include <time.h>
 
 
-int yylex(void);
-int yyerror(char *);
-void * yy_scan_string(char *);
+extern int yylex();
+extern int yyparse();
+extern int yy_scan_string(const char * str);
+extern FILE* yyin;
+
+extern int yyerror(const char *) { return 0; }
 
 %}
 
@@ -155,14 +158,10 @@ Expression:
 
 %%
 
-int yyerror(char *s)
-{
-    printf("\nerror: '%s'\n",s);
-    return 0;
-}
 
 int main(int argc, char *argv[])
 {
+    yyin = stdin;
     srand(time(NULL));
 
     if (argc > 1)
