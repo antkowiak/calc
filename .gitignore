@@ -2,6 +2,12 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/src2/calc/.vs
-/serc2/calc/x64
 *.swp
+.vs/
+src/calc
+src/calc.lex.o
+src/calc.tab.c
+src/calc.tab.h
+src/calc.y.o
+src/lex.yy.c
+
