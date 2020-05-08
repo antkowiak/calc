@@ -138,7 +138,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\.gitignore" />
     <None Include="Makefile" />
+    <None Include="src\calc.l" />
+    <None Include="src\calc.y" />
+    <None Include="src\Makefile" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

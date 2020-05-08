@@ -16,5 +16,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Makefile" />
+    <None Include="..\..\.gitignore" />
+    <None Include="src\calc.l">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\calc.y">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="src\Makefile">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
