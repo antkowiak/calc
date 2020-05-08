@@ -1,0 +1,7 @@
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/src2/calc/.vs
+/serc2/calc/x64
+*.swp
