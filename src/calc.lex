@@ -1,8 +1,7 @@
 %{
+
 #include "global.h"
 #include "calc.tab.h"
-
-#include <stdlib.h>
 
 %}
 
