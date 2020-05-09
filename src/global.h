@@ -1,9 +1,13 @@
-#define YYSTYPE double
+
+#include <string>
 
 #include "arbnumber.h"
 
-typedef long double TNumber;
-//typedef rda::ArbNumber TNumber;
+//#define YYSTYPE double
+#define YYSTYPE rda::ArbNumber
+
+//typedef long double TNumber;
+typedef rda::ArbNumber TNumber;
 
 void print_error(const char *msg);
 
@@ -36,3 +40,11 @@ TNumber calculate_ge(TNumber a, TNumber b);
 
 TNumber calculate_f2c(TNumber f);
 TNumber calculate_c2f(TNumber c);
+
+
+TNumber from_double(double d);
+TNumber from_string(const std::string &s);
+
+long long to_int(TNumber n);
+double to_double(TNumber n);
+std::string to_string(TNumber n);

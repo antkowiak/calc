@@ -9,7 +9,7 @@
 white           [ \t]+
 digit           [0-9]
 integer         {digit}+
-exponant        [eE][+-]{integer}
+exponant        [eE][+-]?{integer}
 real            {integer}("."{integer})?{exponant}?
 pointreal       ("."{integer}){exponant}?
 pi              [Pp][Ii]
@@ -87,68 +87,159 @@ func_f2c        [Ff]2[Cc]
 func_c2f        [Cc]2[Ff]
 
 factorial       {integer}!
-percentage      {real}\%
+percentage      ({pointreal}|{real})\%
 
-k_metric        {real}[Kk]
-m_metric        {real}[Mm]
-b_metric        {real}[Bb]
-t_metric        {real}[Tt]
+p_metric        ({pointreal}|{real})[Pp]
+n_metric        ({pointreal}|{real})[Nn]
+u_metric        ({pointreal}|{real})[Uu]
+m_metric        ({pointreal}|{real})m
+k_metric        ({pointreal}|{real})[Kk]
+M_metric        ({pointreal}|{real})M
+g_metric        ({pointreal}|{real})[Gg]
+t_metric        ({pointreal}|{real})[Tt]
 
 %%
 
 {white}         {}
 
 {real}          {
-                    yylval=atof(yytext);
+                    yylval=TNumber(yytext);
                     return(NUMBER);
                 }
 
 {pointreal}     {
-                    yylval=atof(yytext);
+                    yylval=TNumber(yytext);
                     return(NUMBER);
                 }
 
 {factorial}     {
-                    yylval=1;
-                    unsigned long long end = abs(atoll(yytext));
-                    unsigned long long i=1;
-                    for (i=1 ; i<=end ; ++i)
-                    {
+                    std::string text(yytext);
+                    auto pos = text.find("!");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval=TNumber(1);
+                    TNumber end(text);
+                    for (TNumber i(1) ; i <= end ; ++i)
                         yylval = yylval * i;
-                    }
                     return(NUMBER);
                 }
+
+
 
 {percentage}    {
-                    double dval = atof(yytext);
-                    yylval = dval / 100.0;
+                    std::string text(yytext);
+                    auto pos = text.find("%");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) / TNumber(100);
                     return(NUMBER);
                 }
 
-{k_metric}      {
-                    double dval = atof(yytext);
-                    yylval = dval * 1000.0;
+{p_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("P");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("p");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000) / TNumber(1000);
+                    return(NUMBER);
+                }
+
+{n_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("N");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("n");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000);
+                    return(NUMBER);
+                }
+
+{u_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("U");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("u");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000);
                     return(NUMBER);
                 }
 
 {m_metric}      {
-                    double dval = atof(yytext);
-                    yylval = dval * 1000000.0;
+                    std::string text(yytext);
+                    auto pos = text.find("m");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) / TNumber(1000);
                     return(NUMBER);
                 }
 
-{b_metric}      {
-                    double dval = atof(yytext);
-                    yylval = dval * 1000000000.0;
+{k_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("K");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("k");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) * TNumber(1000);
+                    return(NUMBER);
+                }
+
+{M_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("M");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000);
+                    return(NUMBER);
+                }
+
+{g_metric}      {
+                    std::string text(yytext);
+                    auto pos = text.find("G");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("g");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);
                 }
 
 {t_metric}      {
-                    double dval = atof(yytext);
-                    yylval = dval * 1000000000000.0;
+                    std::string text(yytext);
+                    auto pos = text.find("T");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    pos = text.find("t");
+                    if (pos != std::string::npos)
+                        text.erase(pos, 1);
+
+                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);
                 }
-
 
 {pi}                return(PI_VAL);
 
