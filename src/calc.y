@@ -245,10 +245,10 @@ Expression:
         | PI_VAL                          { $$=rda::calculate_pi(); }
         | NUMBER PI_VAL                   { $$=rda::calculate_pi_times_n($1); }
 
-        | Expression PLUS   Expression    { $$=TNumber($1)+TNumber($3); }
-        | Expression MINUS  Expression    { $$=TNumber($1)-TNumber($3); }
-        | Expression TIMES  Expression    { $$=TNumber($1)*TNumber($3); }
-        | Expression DIVIDE Expression    { $$=TNumber($1)/TNumber($3); }
+        | Expression PLUS   Expression    { $$=rda::calculate_plus($1, $3); }
+        | Expression MINUS  Expression    { $$=rda::calculate_minus($1, $3); }
+        | Expression TIMES  Expression    { $$=rda::calculate_multiply($1, $3); }
+        | Expression DIVIDE Expression    { $$=rda::calculate_divide($1, $3); }
 
         | FUNC_SIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sinl(rda::to_double($3)); }
         | FUNC_COS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=cosl(rda::to_double($3)); }

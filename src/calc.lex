@@ -134,24 +134,15 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {factorial}     {
                     std::string text(yytext);
-                    auto pos = text.find("!");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, '!');
 
-                    yylval=TNumber(1);
-                    TNumber end(text);
-                    for (TNumber i(1) ; i <= end ; ++i)
-                        yylval = yylval * i;
+                    yylval = rda::calculate_factorial(TNumber(text));
                     return(NUMBER);
                 }
 
-
-
 {percentage}    {
                     std::string text(yytext);
-                    auto pos = text.find("%");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, '%');
 
                     yylval = TNumber(text) / TNumber(100);
                     return(NUMBER);
@@ -159,13 +150,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {p_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("P");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("p");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'P');
+                    rda::remove_chars_helper(text, 'p');
 
                     yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000) / TNumber(1000);
                     return(NUMBER);
@@ -173,13 +159,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {n_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("N");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("n");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'N');
+                    rda::remove_chars_helper(text, 'n');
 
                     yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000);
                     return(NUMBER);
@@ -187,13 +168,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {u_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("U");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("u");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'U');
+                    rda::remove_chars_helper(text, 'u');
 
                     yylval = TNumber(text) / TNumber(1000) / TNumber(1000);
                     return(NUMBER);
@@ -201,9 +177,7 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {m_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("m");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'm');
 
                     yylval = TNumber(text) / TNumber(1000);
                     return(NUMBER);
@@ -211,13 +185,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {k_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("K");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("k");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'K');
+                    rda::remove_chars_helper(text, 'k');
 
                     yylval = TNumber(text) * TNumber(1000);
                     return(NUMBER);
@@ -225,9 +194,7 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {M_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("M");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'M');
 
                     yylval = TNumber(text) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);
@@ -235,13 +202,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {g_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("G");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("g");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'G');
+                    rda::remove_chars_helper(text, 'g');
 
                     yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);
@@ -249,13 +211,8 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {t_metric}      {
                     std::string text(yytext);
-                    auto pos = text.find("T");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
-
-                    pos = text.find("t");
-                    if (pos != std::string::npos)
-                        text.erase(pos, 1);
+                    rda::remove_chars_helper(text, 'T');
+                    rda::remove_chars_helper(text, 't');
 
                     yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);

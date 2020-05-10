@@ -54,14 +54,12 @@ namespace rda
     //////////////////////////////////////////////////////////////////////
     static TNumber calculate_factorial_helper(const TNumber &n)
     {
-        long long returnVal = 1;
-        long long end = rda::to_int(n);
-        long long i = 1;
+        TNumber retVal(1);
 
-        for (i = 1; i <= end; ++i)
-            returnVal = returnVal * i;
+        for (TNumber i(1); i <= n; ++i)
+            retVal = retVal * i;
 
-        return TNumber(returnVal);
+        return retVal;
     }
 
     static TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
@@ -81,6 +79,16 @@ namespace rda
         return price;
     }
 
+    static void remove_chars_helper(std::string & str, const char c)
+    {
+        auto pos = str.find(c);
+        while (pos != std::string::npos)
+        {
+            str.erase(pos);
+            pos = str.find(c);
+        }
+    }
+
     //////////////////////////////////////////////////////////////////////
     static TNumber calculate_lone_number(const TNumber &n)
     {
@@ -96,21 +104,10 @@ namespace rda
     {
         std::string text(s);
 
-        auto pos = text.find("P");
-        if (pos != std::string::npos)
-            text.erase(pos, 1);
-
-        pos = text.find("p");
-        if (pos != std::string::npos)
-            text.erase(pos, 1);
-
-        pos = text.find("I");
-        if (pos != std::string::npos)
-            text.erase(pos, 1);
-
-        pos = text.find("i");
-        if (pos != std::string::npos)
-            text.erase(pos, 1);
+        rda::remove_chars_helper(text, 'P');
+        rda::remove_chars_helper(text, 'p');
+        rda::remove_chars_helper(text, 'I');
+        rda::remove_chars_helper(text, 'i');
 
         TNumber n(text);
 
@@ -120,6 +117,26 @@ namespace rda
     static TNumber calculate_pi_times_n(const TNumber &n)
     {
         return (calculate_pi() * n);
+    }
+
+    static TNumber calculate_plus(const TNumber & n1, const TNumber n2)
+    {
+        return n1 + n2;
+    }
+
+    static TNumber calculate_minus(const TNumber &n1, const TNumber n2)
+    {
+        return n1 - n2;
+    }
+
+    static TNumber calculate_multiply(const TNumber &n1, const TNumber n2)
+    {
+        return n1 * n2;
+    }
+
+    static TNumber calculate_divide(const TNumber &n1, const TNumber n2)
+    {
+        return n1 / n2;
     }
 
     static TNumber calculate_mort(const TNumber &principal,
@@ -484,6 +501,14 @@ namespace rda
 
     static TNumber calculate_power(const TNumber & base, const TNumber & expon)
     {
+        if (expon.is_whole_number() && expon > TNumber(0))
+        {
+            TNumber total = 1;
+            for (TNumber i(0) ; i < expon ; ++i)
+                total = total * base;
+            return total;
+        }
+
         double dbase = rda::to_double(base);
         double dexpon = rda::to_double(expon);
         double dresult = powl(dbase, dexpon);
