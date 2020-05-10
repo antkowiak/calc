@@ -267,17 +267,17 @@ Expression:
         | FUNC_ACOSH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_acosh($3); }
         | FUNC_ATANH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_atanh($3); }
         
-        | FUNC_LOG10 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log10l(rda::to_double($3)); }
-        | FUNC_LOG2 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log2l(rda::to_double($3)); }
-        | FUNC_LOG1P LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log1pl(rda::to_double($3)); }
-        | FUNC_LOG LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=logl(rda::to_double($3)); }
-        | FUNC_LN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=logl(rda::to_double($3)); }
+        | FUNC_LOG10 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_log10($3); }
+        | FUNC_LOG2 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_log2($3); }
+        | FUNC_LOG1P LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_log1p($3); }
+        | FUNC_LOG LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_log($3); }
+        | FUNC_LN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_ln($3); }
         
-        | FUNC_EXP LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=expl(rda::to_double($3)); }
-        | FUNC_EXP2 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=exp2l(rda::to_double($3)); }
+        | FUNC_EXP LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_exp($3); }
+        | FUNC_EXP2 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_exp2($3); }
         
-        | FUNC_SQRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sqrtl(rda::to_double($3)); }
-        | FUNC_CBRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=cbrtl(rda::to_double($3)); }
+        | FUNC_SQRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_sqrt($3); }
+        | FUNC_CBRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_cbrt($3); }
         
         | FUNC_ABS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=fabsl(rda::to_double($3)); }
         | FUNC_FLOOR LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=floorl(rda::to_double($3)); }
@@ -285,7 +285,7 @@ Expression:
         | FUNC_ROUND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=roundl(rda::to_double($3)); }
         | FUNC_HYPOT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=hypotl(rda::to_double($3), rda::to_double($5)); }
         
-        | FUNC_POW LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=powl(rda::to_double($3), rda::to_double($5)); }
+        | FUNC_POW LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_power($3, $5); }
         
         | FUNC_TGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tgammal(rda::to_double($3)); }
         | FUNC_LGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=lgammal(rda::to_double($3)); }

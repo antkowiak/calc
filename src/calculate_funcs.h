@@ -204,6 +204,51 @@ namespace rda
         return atanhl(rda::to_double(n));
     }
 
+    static TNumber calculate_log10(const TNumber &n)
+    {
+        return log10l(rda::to_double(n));
+    }
+
+    static TNumber calculate_log2(const TNumber &n)
+    {
+        return log2l(rda::to_double(n));
+    }
+
+    static TNumber calculate_log1p(const TNumber &n)
+    {
+        return log1pl(rda::to_double(n));
+    }
+
+    static TNumber calculate_log(const TNumber &n)
+    {
+        return logl(rda::to_double(n));
+    }
+
+    static TNumber calculate_ln(const TNumber &n)
+    {
+        return logl(rda::to_double(n));
+    }
+
+    static TNumber calculate_exp(const TNumber &n)
+    {
+        return expl(rda::to_double(n));
+    }
+
+    static TNumber calculate_exp2(const TNumber &n)
+    {
+        return exp2l(rda::to_double(n));
+    }
+
+    static TNumber calculate_sqrt(const TNumber &n)
+    {
+        return sqrtl(rda::to_double(n));
+    }
+
+    static TNumber calculate_cbrt(const TNumber &n)
+    {
+        return cbrtl(rda::to_double(n));
+    }
+
     static TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
                            const TNumber &num_years)
