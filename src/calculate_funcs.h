@@ -139,6 +139,71 @@ namespace rda
         return n1 / n2;
     }
 
+    static TNumber calculate_sin(const TNumber &n)
+    {
+        return sinl(rda::to_double(n));
+    }
+
+    static TNumber calculate_cos(const TNumber &n)
+    {
+        return cosl(rda::to_double(n));
+    }
+
+    static TNumber calculate_tan(const TNumber &n)
+    {
+        return tanl(rda::to_double(n));
+    }
+
+    static TNumber calculate_asin(const TNumber &n)
+    {
+        return asinl(rda::to_double(n));
+    }
+
+    static TNumber calculate_acos(const TNumber &n)
+    {
+        return acosl(rda::to_double(n));
+    }
+
+    static TNumber calculate_atan(const TNumber &n)
+    {
+        return atanl(rda::to_double(n));
+    }
+
+    static TNumber calculate_atan2(const TNumber &n1, const TNumber & n2)
+    {
+        return atan2l(rda::to_double(n1), rda::to_double(n2));
+    }
+
+    static TNumber calculate_sinh(const TNumber &n)
+    {
+        return sinhl(rda::to_double(n));
+    }
+
+    static TNumber calculate_cosh(const TNumber &n)
+    {
+        return coshl(rda::to_double(n));
+    }
+
+    static TNumber calculate_tanh(const TNumber &n)
+    {
+        return tanhl(rda::to_double(n));
+    }
+
+    static TNumber calculate_asinh(const TNumber &n)
+    {
+        return asinhl(rda::to_double(n));
+    }
+
+    static TNumber calculate_acosh(const TNumber &n)
+    {
+        return acoshl(rda::to_double(n));
+    }
+
+    static TNumber calculate_atanh(const TNumber &n)
+    {
+        return atanhl(rda::to_double(n));
+    }
+
     static TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
                            const TNumber &num_years)

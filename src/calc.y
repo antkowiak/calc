@@ -250,22 +250,22 @@ Expression:
         | Expression TIMES  Expression    { $$=rda::calculate_multiply($1, $3); }
         | Expression DIVIDE Expression    { $$=rda::calculate_divide($1, $3); }
 
-        | FUNC_SIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sinl(rda::to_double($3)); }
-        | FUNC_COS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=cosl(rda::to_double($3)); }
-        | FUNC_TAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tanl(rda::to_double($3)); }
+        | FUNC_SIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_sin($3); }
+        | FUNC_COS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_cos($3); }
+        | FUNC_TAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_tan($3); }
         
-        | FUNC_ASIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=asinl(rda::to_double($3)); }
-        | FUNC_ACOS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=acosl(rda::to_double($3)); }
-        | FUNC_ATAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=atanl(rda::to_double($3)); }
-        | FUNC_ATAN2 LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=atan2l(rda::to_double($3), rda::to_double($5)); }
+        | FUNC_ASIN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_asin($3); }
+        | FUNC_ACOS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_acos($3); }
+        | FUNC_ATAN LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_atan($3); }
+        | FUNC_ATAN2 LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_atan2($3, $5); }
         
-        | FUNC_SINH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=sinhl(rda::to_double($3)); }
-        | FUNC_COSH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=coshl(rda::to_double($3)); }
-        | FUNC_TANH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tanhl(rda::to_double($3)); }
+        | FUNC_SINH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_sinh($3); }
+        | FUNC_COSH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_cosh($3); }
+        | FUNC_TANH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_tanh($3); }
 
-        | FUNC_ASINH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=asinhl(rda::to_double($3)); }
-        | FUNC_ACOSH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=acoshl(rda::to_double($3)); }
-        | FUNC_ATANH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=atanhl(rda::to_double($3)); }
+        | FUNC_ASINH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_asinh($3); }
+        | FUNC_ACOSH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_acosh($3); }
+        | FUNC_ATANH LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_atanh($3); }
         
         | FUNC_LOG10 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log10l(rda::to_double($3)); }
         | FUNC_LOG2 LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=log2l(rda::to_double($3)); }
