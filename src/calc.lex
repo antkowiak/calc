@@ -54,6 +54,8 @@ func_fmax       [Ff]?[Mm][Aa][Xx][lf]?
 func_fmin       [Ff]?[Mm][Ii][Nn][lf]?
 func_fma        [Ff][Mm][Aa][lf]?
 
+func_last       [Ll][Aa][Ss][Tt]
+func_history    [Hh][Ii][Ss][Tt][Oo][Rr][Yy]
 func_help       [Hh][Ee][Ll][Pp]
 func_quit       ([Ee][Xx][Ii][Tt])|([Qq][Uu][Ii][Tt])|([Qq])
 func_mort       ([Mm][Oo][Rr][Tt][Gg][Aa][Gg][Ee])|([Mm][Oo][Rr][Tt])
@@ -283,6 +285,8 @@ t_metric        ({pointreal}|{real})[Tt]
 {func_fmin}         return(FUNC_FMIN);
 {func_fma}          return(FUNC_FMA);
 
+{func_last}         return(FUNC_LAST);
+{func_history}      return(FUNC_HISTORY);
 {func_help}         return(FUNC_HELP);
 {func_quit}         return(FUNC_QUIT);
 {func_mort}         return(FUNC_MORT);
@@ -328,4 +332,4 @@ t_metric        ({pointreal}|{real})[Tt]
 ","                 return(COMMA);
 
 "\n"                return(END);
-
+";"                 return(END);

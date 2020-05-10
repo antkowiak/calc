@@ -2,14 +2,17 @@
 
 #include <cmath>
 #include <ctime>
+#include <limits>
 #include <string>
 
 #include "arbnumber.h"
+#include "global.h"
 
 namespace rda
 {
     TNumber from_double(const double d)
     {
+        GlobalData::Instance().SetDegraded();
         return TNumber(d);
     }
 
@@ -20,6 +23,7 @@ namespace rda
 
     long long to_int(const TNumber &n)
     {
+        GlobalData::Instance().SetDegraded();
         long long l = atoll(n.to_string().c_str());
         // TODO error check against too big. Trip a loss of precision flag
         return l;
@@ -27,6 +31,7 @@ namespace rda
 
     double to_double(const TNumber &n)
     {
+        GlobalData::Instance().SetDegraded();
         double d = atof(n.to_string().c_str());
         // TODO error check against too big. Trip a loss of precision flag
         return d;
@@ -39,7 +44,18 @@ namespace rda
 
     void print_expression(const TNumber &n)
     {
+        GlobalData::Instance().StoreHistory(n);
         std::cout << n << std::endl;
+    }
+
+    TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
+    {
+        return GlobalData::Instance().Last(n);
+    }
+
+    TNumber calculate_history()
+    {
+        return GlobalData::Instance().History();
     }
 
     TNumber calculate_help()
@@ -124,6 +140,9 @@ namespace rda
         printf("one()           - returns 1\n");
         printf("f2c(f)          - convert Farenheit to Celsius\n");
         printf("c2f(c)          - convert Celsius to Farenheit\n");
+        printf("history()       - prints calculation history\n");
+        printf("last()          - returns prior calculation result\n");
+        printf("last(n)         - returns prior calculation result n\n");
         printf("help()          - prints help message\n");
         printf("quit()          - exits the program\n");
 

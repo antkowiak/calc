@@ -36,7 +36,7 @@ extern FILE* yyin;
 %token  FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %token  FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %token  FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
-%token  FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
+%token  FUNC_EVEN FUNC_ODD FUNC_LAST FUNC_HISTORY FUNC_HELP FUNC_QUIT
 %token  FUNC_F2C FUNC_C2F
 %token  END
 
@@ -56,7 +56,7 @@ extern FILE* yyin;
 %left   FUNC_EQ FUNC_NE FUNC_LT FUNC_LE FUNC_GT FUNC_GE
 %left   FUNC_TRUE FUNC_FALSE FUNC_ZERO FUNC_ONE
 %left   FUNC_NPR FUNC_NCR FUNC_DEG2RAD FUNC_RAD2DEG FUNC_GCD FUNC_LCM
-%left   FUNC_EVEN FUNC_ODD FUNC_HELP FUNC_QUIT
+%left   FUNC_EVEN FUNC_ODD FUNC_LAST FUNC_HISTORY FUNC_HELP FUNC_QUIT
 %left   FUNC_F2C FUNC_C2F
 %left   NEG
 %right  POWER
@@ -121,6 +121,9 @@ Expression:
         | FUNC_FMAX LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmaxl(rda::to_double($3), rda::to_double($5)); }
         | FUNC_FMIN LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fminl(rda::to_double($3), rda::to_double($5)); }
         | FUNC_FMA LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmal(rda::to_double($3), rda::to_double($5), rda::to_double($7)); }
+        | FUNC_LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_last(); }
+        | FUNC_LAST LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$ = rda::calculate_last($3); }
+        | FUNC_HISTORY LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_history(); }
         | FUNC_HELP LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_help(); }
         | FUNC_QUIT LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_quit(); }
         | FUNC_MORT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_mort($3, $5, $7); }
@@ -179,7 +182,17 @@ int main(int argc, char *argv[])
 
         ss << std::endl;       
         yy_scan_string(ss.str().c_str());
+        yyparse();
+        return EXIT_SUCCESS;
     }
 
-    yyparse();
+    std::string line;
+
+    while(std::getline(std::cin, line))
+    {
+        rda::GlobalData::Instance().SetCurrentStr(line);
+        line.append("\n");
+        yy_scan_string(line.c_str());
+        yyparse();
+    }
 }
