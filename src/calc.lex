@@ -329,6 +329,10 @@ t_metric        ({pointreal}|{real})[Tt]
 "("                 return(LEFT_PARENTHESIS);
 ")"                 return(RIGHT_PARENTHESIS);
 
+"{"                 return(LEFT_BRACE);
+"}"                 return(RIGHT_BRACE);
+
+
 ","                 return(COMMA);
 
 "\n"                return(END);

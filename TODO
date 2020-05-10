@@ -1,7 +1,7 @@
-* Add more functions that might be useful.  Perhaps some more financial functions, functions that
-  are widely used in spreadsheet applications, etc.
+# TODO
+* Figure out why the program exits quietly with unexpected input.
 * Add support for a list of expressions, and some associated functions....
   ex: sum({2,4,5,7}) = 18
 * Add documentation about what functions are supported
-* Maybe change flex and bison to use c++ instead of C (?)
+
 
