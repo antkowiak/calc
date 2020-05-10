@@ -82,6 +82,21 @@ namespace rda
     }
 
     //////////////////////////////////////////////////////////////////////
+    TNumber calculate_lone_number(const TNumber & n)
+    {
+        return n;
+    }
+
+    TNumber calculate_pi()
+    {
+        return TNumber("3.1415926535897932384626433832795");
+    }
+
+    TNumber calculate_pi_times_n(const TNumber & n)
+    {
+        return (calculate_pi() * n);
+    }
+
     TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
                            const TNumber &num_years)
@@ -427,7 +442,6 @@ namespace rda
 
     TNumber calculate_quit()
     {
-        std::cout << "Goodbye" << std::endl;
         exit(EXIT_SUCCESS);
         return TNumber(0);
     }
@@ -435,6 +449,25 @@ namespace rda
     TNumber calculate_factorial(const TNumber &n)
     {
         return calculate_factorial_helper(n);
+    }
+
+    TNumber calculate_negation(const TNumber & n)
+    {
+        TNumber r = n * TNumber(-1);
+        return r;
+    }
+
+    TNumber calculate_power(const TNumber & base, const TNumber & expon)
+    {
+        double dbase = rda::to_double(base);
+        double dexpon = rda::to_double(expon);
+        double dresult = powl(dbase, dexpon);
+        return TNumber(dresult);
+    }
+
+    TNumber calculate_unwrap_parenthesis(const TNumber &n)
+    {
+        return n;
     }
 
 } // namespace rda

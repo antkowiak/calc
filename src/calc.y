@@ -241,11 +241,11 @@ Line:
         ;
 
 Expression:
-          NUMBER                          { $$=TNumber($1); }
+          NUMBER                          { $$=rda::calculate_lone_number($1); }
 
-        | PI_VAL                          { $$=rda::from_string("3.1415926535897932384626433832795"); }
+        | PI_VAL                          { $$=rda::calculate_pi(); }
 
-        | NUMBER PI_VAL                   { $$=rda::from_string("3.1415926535897932384626433832795")*$1; }
+        | NUMBER PI_VAL                   { $$=rda::calculate_pi_times_n($1); }
 
         | Expression PLUS   Expression    { $$=TNumber($1)+TNumber($3); }
         | Expression MINUS  Expression    { $$=TNumber($1)-TNumber($3); }
@@ -347,9 +347,9 @@ Expression:
         | FUNC_HELP LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_help(); }
         | FUNC_QUIT LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_quit(); }
 
-        | MINUS Expression %prec NEG      { $$=-$2; }
-        | Expression POWER Expression     { $$=powl(rda::to_double($1),rda::to_double($3)); }
-        | LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=$2; }
+        | MINUS Expression %prec NEG      { $$=rda::calculate_negation($2); }
+        | Expression POWER Expression     { $$=rda::calculate_power($1, $3); }
+        | LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_unwrap_parenthesis($2); }
         ;
 
 %%
@@ -387,4 +387,6 @@ int main(int argc, char *argv[])
         yy_scan_string(line.c_str());
         yyparse();
     }
+
+    return EXIT_SUCCESS;
 }
