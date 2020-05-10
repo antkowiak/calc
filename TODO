@@ -1,5 +1,6 @@
 # TODO
 * Figure out why the program exits quietly with unexpected input.
+* Let arbnumber.h parse a double with "e" or "E" in it for exponent.
 * Add support for a list of expressions, and some associated functions....
   ex: sum({2,4,5,7}) = 18
 * Add documentation about what functions are supported

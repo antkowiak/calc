@@ -129,37 +129,49 @@ extern FILE* yyin;
 
 %left   PLUS MINUS
 %left   TIMES DIVIDE
+
 %left   PI_VAL
+
 %left   FUNC_SIN
 %left   FUNC_COS
 %left   FUNC_TAN
+
 %left   FUNC_ASIN
 %left   FUNC_ACOS
 %left   FUNC_ATAN
 %left   FUNC_ATAN2
+
 %left   FUNC_SINH
 %left   FUNC_COSH
 %left   FUNC_TANH
+
 %left   FUNC_ASINH
 %left   FUNC_ACOSH
 %left   FUNC_ATANH
+
 %left   FUNC_LOG10
-%left   FUNC_LOG1P
 %left   FUNC_LOG2
+%left   FUNC_LOG1P
 %left   FUNC_LOG
 %left   FUNC_LN
+
 %left   FUNC_EXP
 %left   FUNC_EXP2
+
 %left   FUNC_SQRT
 %left   FUNC_CBRT
+
 %left   FUNC_ABS
-%left   FUNC_CEIL
 %left   FUNC_FLOOR
+%left   FUNC_CEIL
 %left   FUNC_ROUND
 %left   FUNC_HYPOT
+
 %left   FUNC_POW
+
 %left   FUNC_TGAMMA
 %left   FUNC_LGAMMA
+
 %left   FUNC_TRUNC
 %left   FUNC_NEARBYINT
 %left   FUNC_FMOD
@@ -170,36 +182,46 @@ extern FILE* yyin;
 %left   FUNC_FMAX
 %left   FUNC_FMIN
 %left   FUNC_FMA
+
 %left   FUNC_MORT
 %left   FUNC_PMT
 %left   FUNC_YTM
+
 %left   FUNC_RAND
 %left   FUNC_SRAND
 %left   FUNC_TIME
+
+%left   FUNC_NPR
+%left   FUNC_NCR
+
+%left   FUNC_DEG2RAD
+%left   FUNC_RAD2DEG
+
+%left   FUNC_GCD
+%left   FUNC_LCM
+
+%left   FUNC_EVEN
+%left   FUNC_ODD
+
 %left   FUNC_EQ
 %left   FUNC_NE
 %left   FUNC_LT
 %left   FUNC_LE
 %left   FUNC_GT
 %left   FUNC_GE
+
 %left   FUNC_TRUE
 %left   FUNC_FALSE
 %left   FUNC_ZERO
 %left   FUNC_ONE
-%left   FUNC_NPR
-%left   FUNC_NCR
-%left   FUNC_DEG2RAD
-%left   FUNC_RAD2DEG
-%left   FUNC_GCD
-%left   FUNC_LCM
-%left   FUNC_EVEN
-%left   FUNC_ODD
+
+%left   FUNC_F2C
+%left   FUNC_C2F
+
 %left   FUNC_LAST
 %left   FUNC_HISTORY
 %left   FUNC_HELP
 %left   FUNC_QUIT
-%left   FUNC_F2C
-%left   FUNC_C2F
 
 %left   NEG
 
@@ -311,10 +333,10 @@ Expression:
         | FUNC_GT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_gt($3, $5); }
         | FUNC_GE LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_ge($3, $5); }
 
-        | FUNC_TRUE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=TNumber(1); }
-        | FUNC_FALSE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=TNumber(0); }
-        | FUNC_ZERO LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=TNumber(0); }
-        | FUNC_ONE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=TNumber(1); }
+        | FUNC_TRUE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=rda::calculate_true(); }
+        | FUNC_FALSE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=rda::calculate_false(); }
+        | FUNC_ZERO LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=rda::calculate_zero(); }
+        | FUNC_ONE LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$=rda::calculate_one(); }
 
         | FUNC_F2C LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_f2c($3); }
         | FUNC_C2F LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_c2f($3); }
@@ -324,7 +346,6 @@ Expression:
         | FUNC_HISTORY LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_history(); }
         | FUNC_HELP LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_help(); }
         | FUNC_QUIT LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_quit(); }
-
 
         | MINUS Expression %prec NEG      { $$=-$2; }
         | Expression POWER Expression     { $$=powl(rda::to_double($1),rda::to_double($3)); }
