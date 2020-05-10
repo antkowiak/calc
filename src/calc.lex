@@ -1,6 +1,7 @@
 %{
 
 #include "global.h"
+#include "calculate_funcs.h"
 #include "calc.tab.h"
 
 %}
@@ -11,6 +12,7 @@ integer         {digit}+
 exponant        [eE][+-]?{integer}
 real            {integer}("."{integer})?{exponant}?
 pointreal       ("."{integer}){exponant}?
+n_pi            [-]?({real}|{pointreal})[Pp][Ii]
 pi              [Pp][Ii]
 
 func_sin        [Ss][Ii][Nn][lf]?
@@ -257,6 +259,11 @@ t_metric        ({pointreal}|{real})[Tt]
 
                     yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000) * TNumber(1000);
                     return(NUMBER);
+                }
+
+{n_pi}          {
+                    yylval = rda::calculate_pi_times_str(yytext);
+                    return (NUMBER);
                 }
 
 {pi}                return(PI_VAL);

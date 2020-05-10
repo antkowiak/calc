@@ -19,7 +19,6 @@ extern FILE* yyin;
 %}
 
 %token  NUMBER
-
 %token  PI_VAL
 
 %token  PLUS
@@ -244,7 +243,6 @@ Expression:
           NUMBER                          { $$=rda::calculate_lone_number($1); }
 
         | PI_VAL                          { $$=rda::calculate_pi(); }
-
         | NUMBER PI_VAL                   { $$=rda::calculate_pi_times_n($1); }
 
         | Expression PLUS   Expression    { $$=TNumber($1)+TNumber($3); }

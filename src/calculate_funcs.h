@@ -11,18 +11,18 @@
 namespace rda
 {
     //////////////////////////////////////////////////////////////////////
-    TNumber from_double(const double d)
+    static TNumber from_double(const double d)
     {
         GlobalData::Instance().SetDegraded();
         return TNumber(d);
     }
 
-    TNumber from_string(const std::string &s)
+    static TNumber from_string(const std::string &s)
     {
         return TNumber(s);
     }
 
-    long long to_int(const TNumber &n)
+    static long long to_int(const TNumber &n)
     {
         GlobalData::Instance().SetDegraded();
         long long l = atoll(n.to_string().c_str());
@@ -30,7 +30,7 @@ namespace rda
         return l;
     }
 
-    double to_double(const TNumber &n)
+    static double to_double(const TNumber &n)
     {
         GlobalData::Instance().SetDegraded();
         double d = atof(n.to_string().c_str());
@@ -39,20 +39,20 @@ namespace rda
     }
 
     //////////////////////////////////////////////////////////////////////
-    std::string to_string(const TNumber &n)
+    static std::string to_string(const TNumber &n)
     {
         return n.to_string();
     }
 
     //////////////////////////////////////////////////////////////////////
-    void print_expression(const TNumber &n)
+    static void print_expression(const TNumber &n)
     {
         GlobalData::Instance().StoreHistory(n);
         std::cout << n << std::endl;
     }
 
     //////////////////////////////////////////////////////////////////////
-    TNumber calculate_factorial_helper(const TNumber &n)
+    static TNumber calculate_factorial_helper(const TNumber &n)
     {
         long long returnVal = 1;
         long long end = rda::to_int(n);
@@ -64,7 +64,7 @@ namespace rda
         return TNumber(returnVal);
     }
 
-    TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
+    static TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
                                  const TNumber &yearsToMaturity,
                                  const TNumber &parValue,
                                  const TNumber &proposedRate)
@@ -82,22 +82,47 @@ namespace rda
     }
 
     //////////////////////////////////////////////////////////////////////
-    TNumber calculate_lone_number(const TNumber & n)
+    static TNumber calculate_lone_number(const TNumber &n)
     {
         return n;
     }
 
-    TNumber calculate_pi()
+    static TNumber calculate_pi()
     {
         return TNumber("3.1415926535897932384626433832795");
     }
 
-    TNumber calculate_pi_times_n(const TNumber & n)
+    static TNumber calculate_pi_times_str(const std::string &s)
+    {
+        std::string text(s);
+
+        auto pos = text.find("P");
+        if (pos != std::string::npos)
+            text.erase(pos, 1);
+
+        pos = text.find("p");
+        if (pos != std::string::npos)
+            text.erase(pos, 1);
+
+        pos = text.find("I");
+        if (pos != std::string::npos)
+            text.erase(pos, 1);
+
+        pos = text.find("i");
+        if (pos != std::string::npos)
+            text.erase(pos, 1);
+
+        TNumber n(text);
+
+        return n * calculate_pi();
+    }
+
+    static TNumber calculate_pi_times_n(const TNumber &n)
     {
         return (calculate_pi() * n);
     }
 
-    TNumber calculate_mort(const TNumber &principal,
+    static TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
                            const TNumber &num_years)
     {
@@ -111,7 +136,7 @@ namespace rda
         return monthlyPayment;
     }
 
-    TNumber calculate_pmt(const TNumber &r,
+    static TNumber calculate_pmt(const TNumber &r,
                           const TNumber &nper,
                           const TNumber &pv,
                           const TNumber &fv,
@@ -123,7 +148,7 @@ namespace rda
                ((TNumber(-1) + q) * (TNumber(1) + r * (type)));
     }
 
-    TNumber calculate_ytm(const TNumber &couponRate,
+    static TNumber calculate_ytm(const TNumber &couponRate,
                           const TNumber &yearsToMaturity,
                           const TNumber &parValue,
                           const TNumber &price)
@@ -152,7 +177,7 @@ namespace rda
         return rateTry;
     }
 
-    TNumber calculate_rand(const TNumber &a)
+    static TNumber calculate_rand(const TNumber &a)
     {
         if (a == 0.0)
             return rand();
@@ -160,18 +185,18 @@ namespace rda
         return rand() % (rda::to_int(a));
     }
 
-    TNumber calculate_srand(const TNumber &a)
+    static TNumber calculate_srand(const TNumber &a)
     {
         srand(static_cast<unsigned long long>(rda::to_int(a)));
         return TNumber(1);
     }
 
-    TNumber calculate_time()
+    static TNumber calculate_time()
     {
         return (TNumber)time(NULL);
     }
 
-    TNumber calculate_npr(const TNumber &n, const TNumber &r)
+    static TNumber calculate_npr(const TNumber &n, const TNumber &r)
     {
         unsigned long long ni = static_cast<unsigned long long>(rda::to_int(n));
         unsigned long long ri = static_cast<unsigned long long>(rda::to_int(r));
@@ -190,7 +215,7 @@ namespace rda
         return TNumber(total);
     }
 
-    TNumber calculate_ncr(const TNumber &n, const TNumber &r)
+    static TNumber calculate_ncr(const TNumber &n, const TNumber &r)
     {
         unsigned long long ni = static_cast<unsigned long long>(rda::to_int(n));
         unsigned long long ri = static_cast<unsigned long long>(rda::to_int(r));
@@ -198,17 +223,17 @@ namespace rda
         return ((calculate_npr(ni, ri) / calculate_factorial_helper(ri)));
     }
 
-    TNumber calculate_deg2rad(const TNumber &deg)
+    static TNumber calculate_deg2rad(const TNumber &deg)
     {
         return ((deg * 3.141592654) / 180.0);
     }
 
-    TNumber calculate_rad2deg(const TNumber &rad)
+    static TNumber calculate_rad2deg(const TNumber &rad)
     {
         return ((rad * 180.0) / 3.141592654);
     }
 
-    TNumber calculate_gcd(const TNumber &a, const TNumber &b)
+    static TNumber calculate_gcd(const TNumber &a, const TNumber &b)
     {
         long long imin =
             (long long)fminl(fabsl(rda::to_double(a)), fabsl(rda::to_double(b)));
@@ -230,7 +255,7 @@ namespace rda
         return TNumber(1);
     }
 
-    TNumber calculate_lcm(const TNumber &a, const TNumber &b)
+    static TNumber calculate_lcm(const TNumber &a, const TNumber &b)
     {
         long long ai = rda::to_int(a);
         long long bi = rda::to_int(b);
@@ -251,7 +276,7 @@ namespace rda
         return TNumber(0);
     }
 
-    TNumber calculate_even(const TNumber &n)
+    static TNumber calculate_even(const TNumber &n)
     {
         long long val = rda::to_int(n);
         if (val % 2 == 0)
@@ -259,7 +284,7 @@ namespace rda
         return TNumber(0);
     }
 
-    TNumber calculate_odd(const TNumber &n)
+    static TNumber calculate_odd(const TNumber &n)
     {
         long long val = rda::to_int(n);
         if (val % 2 == 1)
@@ -267,89 +292,89 @@ namespace rda
         return TNumber(0);
     }
 
-    TNumber calculate_eq(const TNumber &a, const TNumber &b)
+    static TNumber calculate_eq(const TNumber &a, const TNumber &b)
     {
         if (a == b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_ne(const TNumber &a, const TNumber &b)
+    static TNumber calculate_ne(const TNumber &a, const TNumber &b)
     {
         if (a != b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_lt(const TNumber &a, const TNumber &b)
+    static TNumber calculate_lt(const TNumber &a, const TNumber &b)
     {
         if (a < b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_le(const TNumber &a, const TNumber &b)
+    static TNumber calculate_le(const TNumber &a, const TNumber &b)
     {
         if (a <= b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_gt(const TNumber &a, const TNumber &b)
+    static TNumber calculate_gt(const TNumber &a, const TNumber &b)
     {
         if (a > b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_ge(const TNumber &a, const TNumber &b)
+    static TNumber calculate_ge(const TNumber &a, const TNumber &b)
     {
         if (a >= b)
             return TNumber(1);
         return TNumber(0);
     }
 
-    TNumber calculate_true()
+    static TNumber calculate_true()
     {
         return TNumber(1);
     }
 
-    TNumber calculate_false()
+    static TNumber calculate_false()
     {
         return TNumber(0);
     }
 
-    TNumber calculate_zero()
+    static TNumber calculate_zero()
     {
         return TNumber(0);
     }
 
-    TNumber calculate_one()
+    static TNumber calculate_one()
     {
         return TNumber(1);
     }
 
-    TNumber calculate_f2c(const TNumber &f)
+    static TNumber calculate_f2c(const TNumber &f)
     {
         return ((((f - TNumber(32.0)) * TNumber(5)) / TNumber(9)));
     }
 
-    TNumber calculate_c2f(const TNumber &c)
+    static TNumber calculate_c2f(const TNumber &c)
     {
         return ((((TNumber(c) * TNumber(9)) / TNumber(5)) + TNumber(32.0)));
     }
 
-    TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
+    static TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
     {
         return GlobalData::Instance().Last(n);
     }
 
-    TNumber calculate_history()
+    static TNumber calculate_history()
     {
         return GlobalData::Instance().History();
     }
 
-    TNumber calculate_help()
+    static TNumber calculate_help()
     {
         printf("Available functions: \n");
         printf("(x!)            - factorial\n");
@@ -440,24 +465,24 @@ namespace rda
         return TNumber(0);
     }
 
-    TNumber calculate_quit()
+    static TNumber calculate_quit()
     {
         exit(EXIT_SUCCESS);
         return TNumber(0);
     }
 
-    TNumber calculate_factorial(const TNumber &n)
+    static TNumber calculate_factorial(const TNumber &n)
     {
         return calculate_factorial_helper(n);
     }
 
-    TNumber calculate_negation(const TNumber & n)
+    static TNumber calculate_negation(const TNumber & n)
     {
         TNumber r = n * TNumber(-1);
         return r;
     }
 
-    TNumber calculate_power(const TNumber & base, const TNumber & expon)
+    static TNumber calculate_power(const TNumber & base, const TNumber & expon)
     {
         double dbase = rda::to_double(base);
         double dexpon = rda::to_double(expon);
@@ -465,7 +490,7 @@ namespace rda
         return TNumber(dresult);
     }
 
-    TNumber calculate_unwrap_parenthesis(const TNumber &n)
+    static TNumber calculate_unwrap_parenthesis(const TNumber &n)
     {
         return n;
     }
