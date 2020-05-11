@@ -15,6 +15,10 @@ pointreal       ("."{integer}){exponant}?
 n_pi            [-]?({real}|{pointreal})[Pp][Ii]
 pi              [Pp][Ii]
 
+func_asinh      [Aa][Ss][Ii][Nn][Hh][lf]?
+func_acosh      [Aa][Cc][Oo][Ss][Hh][lf]?
+func_atanh      [Aa][Tt][Aa][Nn][Hh][lf]?
+
 func_sin        [Ss][Ii][Nn][lf]?
 func_cos        [Cc][Oo][Ss][lf]?
 func_tan        [Tt][Aa][Nn][lf]?
@@ -27,10 +31,6 @@ func_atan2      [Aa][Tt][Aa][Nn]2[lf]?
 func_sinh       [Ss][Ii][Nn][Hh][lf]?
 func_cosh       [Cc][Oo][Ss][Hh][lf]?
 func_tanh       [Tt][Aa][Nn][Hh][lf]?
-
-func_asinh      [Aa][Ss][Ii][Nn][Hh][lf]?
-func_acosh      [As][Cc][Oo][Ss][Hh][lf]?
-func_atanh      [Aa][Tt][Aa][Nn][Hh][lf]?
 
 func_log10      [Ll][Oo][Gg]10[lf]?
 func_log2       [Ll][Oo][Gg]2[lf]?
@@ -225,6 +225,10 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {pi}                return(PI_VAL);
 
+{func_asinh}        return(FUNC_ASINH);
+{func_acosh}        return(FUNC_ACOSH);
+{func_atanh}        return(FUNC_ATANH);
+
 {func_sin}          return(FUNC_SIN);
 {func_cos}          return(FUNC_COS);
 {func_tan}          return(FUNC_TAN);
@@ -237,10 +241,6 @@ t_metric        ({pointreal}|{real})[Tt]
 {func_sinh}         return(FUNC_SINH);
 {func_cosh}         return(FUNC_COSH);
 {func_tanh}         return(FUNC_TANH);
-
-{func_asinh}        return(FUNC_ASINH);
-{func_acosh}        return(FUNC_ACOSH);
-{func_atanh}        return(FUNC_ATANH);
 
 {func_log10}        return(FUNC_LOG10);
 {func_log1p}        return(FUNC_LOG1P);

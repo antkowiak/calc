@@ -139,115 +139,147 @@ namespace rda
         return n1 / n2;
     }
 
-    static TNumber calculate_sin(const TNumber &n)
-    {
-        return sinl(rda::to_double(n));
-    }
-
-    static TNumber calculate_cos(const TNumber &n)
-    {
-        return cosl(rda::to_double(n));
-    }
-
-    static TNumber calculate_tan(const TNumber &n)
-    {
-        return tanl(rda::to_double(n));
-    }
-
-    static TNumber calculate_asin(const TNumber &n)
-    {
-        return asinl(rda::to_double(n));
-    }
-
-    static TNumber calculate_acos(const TNumber &n)
-    {
-        return acosl(rda::to_double(n));
-    }
-
-    static TNumber calculate_atan(const TNumber &n)
-    {
-        return atanl(rda::to_double(n));
-    }
-
-    static TNumber calculate_atan2(const TNumber &n1, const TNumber & n2)
-    {
-        return atan2l(rda::to_double(n1), rda::to_double(n2));
-    }
-
-    static TNumber calculate_sinh(const TNumber &n)
-    {
-        return sinhl(rda::to_double(n));
-    }
-
-    static TNumber calculate_cosh(const TNumber &n)
-    {
-        return coshl(rda::to_double(n));
-    }
-
-    static TNumber calculate_tanh(const TNumber &n)
-    {
-        return tanhl(rda::to_double(n));
-    }
-
     static TNumber calculate_asinh(const TNumber &n)
     {
-        return asinhl(rda::to_double(n));
+        return std::asinh(rda::to_double(n));
     }
 
     static TNumber calculate_acosh(const TNumber &n)
     {
-        return acoshl(rda::to_double(n));
+        return std::acosh(rda::to_double(n));
     }
 
     static TNumber calculate_atanh(const TNumber &n)
     {
-        return atanhl(rda::to_double(n));
+        return std::atanh(rda::to_double(n));
+    }
+
+    static TNumber calculate_sin(const TNumber &n)
+    {
+        return std::sin(rda::to_double(n));
+    }
+
+    static TNumber calculate_cos(const TNumber &n)
+    {
+        return std::cos(rda::to_double(n));
+    }
+
+    static TNumber calculate_tan(const TNumber &n)
+    {
+        return std::tan(rda::to_double(n));
+    }
+
+    static TNumber calculate_asin(const TNumber &n)
+    {
+        return std::asin(rda::to_double(n));
+    }
+
+    static TNumber calculate_acos(const TNumber &n)
+    {
+        return std::acos(rda::to_double(n));
+    }
+
+    static TNumber calculate_atan(const TNumber &n)
+    {
+        return std::atan(rda::to_double(n));
+    }
+
+    static TNumber calculate_atan2(const TNumber &n1, const TNumber & n2)
+    {
+        return std::atan2(rda::to_double(n1), rda::to_double(n2));
+    }
+
+    static TNumber calculate_sinh(const TNumber &n)
+    {
+        return std::sinh(rda::to_double(n));
+    }
+
+    static TNumber calculate_cosh(const TNumber &n)
+    {
+        return std::cosh(rda::to_double(n));
+    }
+
+    static TNumber calculate_tanh(const TNumber &n)
+    {
+        return std::tanh(rda::to_double(n));
     }
 
     static TNumber calculate_log10(const TNumber &n)
     {
-        return log10l(rda::to_double(n));
+        return std::log10(rda::to_double(n));
     }
 
     static TNumber calculate_log2(const TNumber &n)
     {
-        return log2l(rda::to_double(n));
+        return std::log2(rda::to_double(n));
     }
 
     static TNumber calculate_log1p(const TNumber &n)
     {
-        return log1pl(rda::to_double(n));
+        return std::log1p(rda::to_double(n));
     }
 
     static TNumber calculate_log(const TNumber &n)
     {
-        return logl(rda::to_double(n));
+        return std::log(rda::to_double(n));
     }
 
     static TNumber calculate_ln(const TNumber &n)
     {
-        return logl(rda::to_double(n));
+        return std::log(rda::to_double(n));
     }
 
     static TNumber calculate_exp(const TNumber &n)
     {
-        return expl(rda::to_double(n));
+        return std::exp(rda::to_double(n));
     }
 
     static TNumber calculate_exp2(const TNumber &n)
     {
-        return exp2l(rda::to_double(n));
+        return std::exp2(rda::to_double(n));
     }
 
     static TNumber calculate_sqrt(const TNumber &n)
     {
-        return sqrtl(rda::to_double(n));
+        return std::sqrt(rda::to_double(n));
     }
 
     static TNumber calculate_cbrt(const TNumber &n)
     {
-        return cbrtl(rda::to_double(n));
+        return std::cbrt(rda::to_double(n));
     }
+
+    static TNumber calculate_abs(const TNumber &n)
+    {
+        return TNumber::abs(n);
+    }
+    static TNumber calculate_floor(const TNumber &n)
+    {
+        return TNumber::floor(n);
+    }
+    static TNumber calculate_ceil(const TNumber &n)
+    {
+        return TNumber::ceil(n);
+    }
+    static TNumber calculate_round(const TNumber &n)
+    {
+        return std::round(rda::to_double(n));
+    }
+    static TNumber calculate_hypot(const TNumber &n1, const TNumber &n2)
+    {
+        return std::hypot(rda::to_double(n1), rda::to_double(n2));
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     static TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
