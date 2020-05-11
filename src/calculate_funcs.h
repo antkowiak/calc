@@ -262,24 +262,24 @@ namespace rda
                                  const TNumber &parValue,
                                  const TNumber &price)
     {
-        TNumber yrs = roundl(rda::to_double(yearsToMaturity));
+        TNumber yrs = yearsToMaturity.round();
         TNumber annualCouponPayment = couponRate * parValue;
         TNumber rateTry = couponRate;
         TNumber rateLow = couponRate - 10.0;
         TNumber rateHigh = couponRate + 10.0;
+
         for (int i = 0; i < 100; ++i)
         {
-            TNumber p =
-                calculate_ytm_helper(annualCouponPayment, yrs, parValue, rateTry);
+            TNumber p = calculate_ytm_helper(annualCouponPayment, yrs, parValue, rateTry);
             TNumber oldRateTry = rateTry;
             if (p < price)
             {
-                rateTry = (rateTry + rateLow) / 2.0;
+                rateTry = (rateTry + rateLow) / 2;
                 rateHigh = oldRateTry;
             }
             else if (p > price)
             {
-                rateTry = (rateTry + rateHigh) / 2.0;
+                rateTry = (rateTry + rateHigh) / 2;
                 rateLow = oldRateTry;
             }
         }
@@ -314,7 +314,7 @@ namespace rda
 
         const auto dif = n - r;
 
-        for (TNumber i(n); i > dif ; --i)
+        for (TNumber i(n); i > dif; --i)
             total *= i;
 
         return TNumber(total);
@@ -349,8 +349,8 @@ namespace rda
         if (aa > bb)
             std::swap(aa, bb);
 
-        for (TNumber d(aa) ; d >= 1; --d)
-            if ( (aa / d).is_whole_number() && (bb / d).is_whole_number() )
+        for (TNumber d(aa); d >= 1; --d)
+            if ((aa / d).is_whole_number() && (bb / d).is_whole_number())
                 return d;
 
         return TNumber(1);

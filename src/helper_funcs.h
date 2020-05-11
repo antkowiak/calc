@@ -10,12 +10,6 @@
 
 namespace rda
 {
-    static TNumber from_double(const double d)
-    {
-        GlobalData::Instance().SetDegraded();
-        return TNumber(d);
-    }
-
     static TNumber from_string(const std::string &s)
     {
         return TNumber(s);
@@ -23,9 +17,11 @@ namespace rda
 
     static double to_double(const TNumber &n)
     {
-        GlobalData::Instance().SetDegraded();
         double d = std::atof(n.to_string().c_str());
-        // TODO error check against too big. Trip a loss of precision flag
+
+        if (n != d)
+            GlobalData::Instance().SetDegraded();
+
         return d;
     }
 
@@ -110,7 +106,7 @@ namespace rda
                     total = total * base;
 
                 // truncate to 20 decimal places to avoid bad performance
-                TNumber t = TNumber::truncate_precision(total, 20);
+                TNumber t = TNumber::truncate_precision(total, 10);
 
                 // if the truncation changed the value of the total, trip the degraded flag
                 if (t != total)
