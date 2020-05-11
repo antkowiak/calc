@@ -119,6 +119,13 @@ extern FILE* yyin;
 %token  FUNC_F2C
 %token  FUNC_C2F
 
+%token  FUNC_IFEQ
+%token  FUNC_IFNEQ
+%token  FUNC_IFLT
+%token  FUNC_IFGT
+%token  FUNC_IFZERO
+%token  FUNC_IFNZERO
+
 %token  FUNC_LAST
 %token  FUNC_HISTORY
 %token  FUNC_HELP
@@ -216,6 +223,13 @@ extern FILE* yyin;
 
 %left   FUNC_F2C
 %left   FUNC_C2F
+
+%left   FUNC_IFEQ
+%left   FUNC_IFNEQ
+%left   FUNC_IFLT
+%left   FUNC_IFGT
+%left   FUNC_IFZERO
+%left   FUNC_IFNZERO
 
 %left   FUNC_LAST
 %left   FUNC_HISTORY
@@ -338,6 +352,13 @@ Expression:
 
         | FUNC_F2C LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_f2c($3); }
         | FUNC_C2F LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_c2f($3); }
+
+        | FUNC_IFEQ LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_ifeq($3, $5, $7, $9); }
+        | FUNC_IFNEQ LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_ifneq($3, $5, $7, $9); }
+        | FUNC_IFLT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_iflt($3, $5, $7, $9); }
+        | FUNC_IFGT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_ifgt($3, $5, $7, $9); }
+        | FUNC_IFZERO LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression  RIGHT_PARENTHESIS { $$=rda::calculate_ifzero($3, $5, $7); }
+        | FUNC_IFNZERO LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_ifnzero($3, $5, $7); }
 
         | FUNC_LAST LEFT_PARENTHESIS RIGHT_PARENTHESIS { $$ = rda::calculate_last(); }
         | FUNC_LAST LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$ = rda::calculate_last($3); }

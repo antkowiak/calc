@@ -101,6 +101,13 @@ func_one        [Oo][Nn][Ee]
 func_f2c        [Ff]2[Cc]
 func_c2f        [Cc]2[Ff]
 
+func_ifeq       [Ii][Ff][Ee][Qq]
+func_ifneq      [Ii][Ff][Nn][Ee][Qq]
+func_iflt       [Ii][Ff][Ll][Tt]
+func_ifgt       [Ii][Ff][Gg][Tt]
+func_ifzero     [Ii][Ff][Zz][Ee][Rr][Oo]
+func_ifnzero    [Ii][Ff][Nn][Zz][Ee][Rr][Oo]
+
 func_last       [Ll][Aa][Ss][Tt]
 func_history    [Hh][Ii][Ss][Tt][Oo][Rr][Yy]
 func_help       [Hh][Ee][Ll][Pp]
@@ -310,6 +317,13 @@ t_metric        ({pointreal}|{real})[Tt]
 
 {func_f2c}          return(FUNC_F2C);
 {func_c2f}          return(FUNC_C2F);
+
+{func_ifeq}         return(FUNC_IFEQ);
+{func_ifneq}        return(FUNC_IFNEQ);
+{func_iflt}         return(FUNC_IFLT);
+{func_ifgt}         return(FUNC_IFGT);
+{func_ifzero}       return(FUNC_IFZERO);
+{func_ifnzero}      return(FUNC_IFNZERO);
 
 {func_last}         return(FUNC_LAST);
 {func_history}      return(FUNC_HISTORY);

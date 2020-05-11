@@ -209,38 +209,51 @@ namespace rda
     {
         return std::trunc(rda::to_double(n));
     }
+
     static TNumber calculate_nearbyint(const TNumber &n)
     {
         return std::nearbyint(rda::to_double(n));
     }
+
     static TNumber calculate_fmod(const TNumber &n1, const TNumber &n2)
     {
         return std::fmod(rda::to_double(n1), rda::to_double(n2));
     }
+
     static TNumber calculate_remainder(const TNumber &n1, const TNumber &n2)
     {
         return std::remainder(rda::to_double(n1), rda::to_double(n2));
     }
+
     static TNumber calculate_nextafter(const TNumber &n1, const TNumber &n2)
     {
         return std::nextafter(rda::to_double(n1), rda::to_double(n2));
     }
+
     static TNumber calculate_nexttoward(const TNumber &n1, const TNumber &n2)
     {
         return std::nexttoward(rda::to_double(n1), rda::to_double(n2));
     }
+
     static TNumber calculate_fdim(const TNumber &n1, const TNumber &n2)
     {
         return std::fdim(rda::to_double(n1), rda::to_double(n2));
     }
+
     static TNumber calculate_fmax(const TNumber &n1, const TNumber &n2)
     {
-        return std::fmax(rda::to_double(n1), rda::to_double(n2));
+        if (n1 > n2)
+            return n1;
+        return n2;
     }
+
     static TNumber calculate_fmin(const TNumber &n1, const TNumber &n2)
     {
-        return std::fmin(rda::to_double(n1), rda::to_double(n2));
+        if (n1 < n2)
+            return n1;
+        return n2;
     }
+
     static TNumber calculate_fma(const TNumber &n1, const TNumber &n2, const TNumber &n3)
     {
         return std::fma(rda::to_double(n1), rda::to_double(n2), rda::to_double(n3));
@@ -488,6 +501,49 @@ namespace rda
         return ((((TNumber(c) * TNumber(9)) / TNumber(5)) + TNumber(32.0)));
     }
 
+    static TNumber calculate_ifeq(const TNumber& expr1, const TNumber& expr2, const TNumber& a, const TNumber& b)
+    {
+        if (expr1 == expr2)
+            return a;
+        return b;
+    }
+
+    static TNumber calculate_ifneq(const TNumber &expr1, const TNumber &expr2, const TNumber &a, const TNumber &b)
+    {
+        if (expr1 != expr2)
+            return a;
+        return b;
+    }
+
+    static TNumber calculate_iflt(const TNumber &expr1, const TNumber &expr2, const TNumber &a, const TNumber &b)
+    {
+        if (expr1 < expr2)
+            return a;
+        return b;
+    }
+
+    static TNumber calculate_ifgt(const TNumber &expr1, const TNumber &expr2, const TNumber &a, const TNumber &b)
+    {
+        if (expr1 > expr2)
+            return a;
+        return b;
+    }
+
+    static TNumber calculate_ifzero(const TNumber &expr, const TNumber &a, const TNumber &b)
+    {
+        if (expr == TNumber(0))
+            return a;
+        return b;
+    }
+
+    static TNumber calculate_ifnzero(const TNumber &expr, const TNumber &a, const TNumber &b)
+    {
+        if (expr != TNumber(0))
+            return a;
+        return b;
+    }
+
+
     static TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
     {
         return GlobalData::Instance().Last(n);
@@ -548,8 +604,8 @@ namespace rda
         printf("fmod(x)         - floating point remainder function\n");
         printf("remainder(x,y)  - floating point remainder function\n");
         printf("fdim(x,y)       - return the difference if positive, 0 otherwise\n");
-        printf("fmax(x,y)       - return maximum value\n");
-        printf("fmin(x,y)       - return minimum value\n");
+        printf("max(x,y)       - return maximum value\n");
+        printf("min(x,y)       - return minimum value\n");
         printf("fma(x,y,z)      - multiple and add, then round\n");
         printf("mort(x,y,z)     - calculate mortgage\n");
         printf("pmt(x,y,z,a,b)  - loan payment function\n");
@@ -580,8 +636,14 @@ namespace rda
         printf("one()           - returns 1\n");
         printf("f2c(f)          - convert Farenheit to Celsius\n");
         printf("c2f(c)          - convert Celsius to Farenheit\n");
-        printf("history()       - prints calculation history\n");
+        printf("ifeq(e1,e2,a,b) - if (e1==e2), return a, else b\n");
+        printf("ifneq(e1,e2,a,b)- if (e1!=e2), return a, else b\n");
+        printf("iflt(e1,e2,a,b) - if (e1<e2),  return a, else b\n");
+        printf("ifgt(e1,e2,a,b) - if (e1>e2),  return a, else b\n");
+        printf("ifzero(e,a,b)   - if (e1==0),  return a, else b\n");
+        printf("ifnzero(e,a,b)  - if (e1!=0),  return a, else b\n");
         printf("last()          - returns prior calculation result\n");
+        printf("history()       - prints calculation history\n");
         printf("last(n)         - returns prior calculation result n\n");
         printf("help()          - prints help message\n");
         printf("quit()          - exits the program\n");
