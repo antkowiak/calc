@@ -48,6 +48,20 @@ namespace rda
         std::cout << n << std::endl;
     }
 
+    static void print_list(const std::vector<TNumber> & data)
+    {
+        std::cout << "{";
+
+        for (size_t i = 0 ; i < data.size() ; ++i)
+        {
+            if (i != 0)
+                std::cout << ", ";
+            std::cout << data[i].to_string();
+        }
+
+        std::cout << "}" << std::endl;
+    }
+
     static TNumber calculate_factorial_helper(const TNumber &n)
     {
         TNumber retVal(1);

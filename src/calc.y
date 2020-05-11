@@ -6,6 +6,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <vector>
 
 #include "global.h"
 #include "calculate_funcs.h"
@@ -257,6 +258,17 @@ Input:
 Line:
           END
         | Expression    END { rda::print_expression($1); }
+        | List          END { rda::print_list(std::vector<TNumber>()); }
+        ;
+
+List:
+           LEFT_BRACE RIGHT_BRACE               {}
+         | LEFT_BRACE Expression ListTail       {}
+         ;
+
+ListTail:
+          RIGHT_BRACE                           {}
+        | COMMA Expression ListTail             {}
         ;
 
 Expression:
