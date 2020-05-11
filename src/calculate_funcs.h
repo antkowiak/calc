@@ -193,7 +193,7 @@ namespace rda
 
     static TNumber calculate_trunc(const TNumber &n)
     {
-        return std::trunc(rda::to_double(n));
+        return TNumber::truncate_precision(n, 0);
     }
 
     static TNumber calculate_nearbyint(const TNumber &n)
