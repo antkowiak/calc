@@ -501,7 +501,7 @@ namespace rda
         return ((((TNumber(c) * TNumber(9)) / TNumber(5)) + TNumber(32.0)));
     }
 
-    static TNumber calculate_ifeq(const TNumber& expr1, const TNumber& expr2, const TNumber& a, const TNumber& b)
+    static TNumber calculate_ifeq(const TNumber &expr1, const TNumber &expr2, const TNumber &a, const TNumber &b)
     {
         if (expr1 == expr2)
             return a;
@@ -543,7 +543,7 @@ namespace rda
         return b;
     }
 
-    static TNumber calculate_store(const TNumber& key, const TNumber& val)
+    static TNumber calculate_store(const TNumber &key, const TNumber &val)
     {
         return rda::GlobalData::Instance().StoreMemory(key, val);
     }

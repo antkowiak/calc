@@ -95,13 +95,13 @@ namespace rda
             return TNumber(0);
         }
 
-        TNumber StoreMemory(const TNumber& key, const TNumber& val)
+        TNumber StoreMemory(const TNumber &key, const TNumber &val)
         {
             memory[key] = val;
             return val;
         }
 
-        TNumber RecallMemory(const TNumber& key) const
+        TNumber RecallMemory(const TNumber &key) const
         {
             auto iter = memory.find(key);
             if (iter == memory.end())
@@ -119,7 +119,7 @@ namespace rda
         {
             for (auto iter = memory.cbegin(); iter != memory.cend(); ++iter)
                 std::cout << "memory[" << iter->first << "] = " << iter->second << std::endl;
-        
+
             return TNumber(0);
         }
     };
