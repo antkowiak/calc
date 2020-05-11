@@ -143,7 +143,7 @@ namespace rda
 
     static TNumber calculate_exp2(const TNumber &n)
     {
-        return std::exp2(rda::to_double(n));
+        return rda::calculate_power_helper(TNumber(2), n);
     }
 
     static TNumber calculate_sqrt(const TNumber &n)
@@ -679,18 +679,7 @@ namespace rda
 
     static TNumber calculate_power(const TNumber &base, const TNumber &expon)
     {
-        if (expon.is_whole_number() && expon > TNumber(0))
-        {
-            TNumber total = 1;
-            for (TNumber i(0); i < expon; ++i)
-                total = total * base;
-            return total;
-        }
-
-        double dbase = rda::to_double(base);
-        double dexpon = rda::to_double(expon);
-        double dresult = powl(dbase, dexpon);
-        return TNumber(dresult);
+        return rda::calculate_power_helper(base, expon);
     }
 
     static TNumber calculate_unwrap_parenthesis(const TNumber &n)

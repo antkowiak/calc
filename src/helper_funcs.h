@@ -89,4 +89,21 @@ namespace rda
     {
         return TNumber("3.1415926535897932384626433832795");
     }
+
+    static TNumber calculate_power_helper(const TNumber &base, const TNumber &expon)
+    {
+        if (expon.is_whole_number() && expon > TNumber(0))
+        {
+            TNumber total = 1;
+            for (TNumber i(0); i < expon; ++i)
+                total = total * base;
+            return total;
+        }
+
+        double dbase = rda::to_double(base);
+        double dexpon = rda::to_double(expon);
+        double dresult = powl(dbase, dexpon);
+        return TNumber(dresult);
+    }
+
 } // namespace rda
