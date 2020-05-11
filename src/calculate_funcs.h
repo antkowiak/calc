@@ -253,10 +253,8 @@ namespace rda
                                  const TNumber &fv,
                                  const TNumber &type)
     {
-        TNumber q = rda::from_double(
-            powl(rda::to_double(TNumber(1) + r), rda::to_double(nper)));
-        return (r * (fv + (q * pv))) /
-               ((TNumber(-1) + q) * (TNumber(1) + r * (type)));
+        TNumber q = rda::calculate_power_helper(r + 1, nper);
+        return (r * (fv + q * pv)) / (q - 1) * (r * type + 1);
     }
 
     static TNumber calculate_ytm(const TNumber &couponRate,

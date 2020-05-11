@@ -4,3 +4,4 @@
 * Add support for a list of expressions, and some associated functions....
   ex: sum({2,4,5,7}) = 18
 * Add documentation about what functions are supported
+* Optimize some functions to try to do calculations with "long long" first. Detect overflows and fall back to arbnumber.
