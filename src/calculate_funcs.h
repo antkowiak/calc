@@ -173,7 +173,7 @@ namespace rda
 
     static TNumber calculate_round(const TNumber &n)
     {
-        return n.round();
+        return TNumber::round(n);
     }
 
     static TNumber calculate_hypot(const TNumber &n1, const TNumber &n2)
