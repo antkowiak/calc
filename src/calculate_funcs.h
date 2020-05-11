@@ -525,7 +525,7 @@ namespace rda
         return rda::GlobalData::Instance().ClearMemory();
     }
 
-    static TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
+    static TNumber calculate_last(const TNumber n = 1'000'000)
     {
         return GlobalData::Instance().Last(n);
     }

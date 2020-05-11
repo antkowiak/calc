@@ -50,7 +50,7 @@ namespace rda
             current_degraded = true;
         }
 
-        TNumber Last(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
+        TNumber Last(const TNumber index = 1'000'000) const
         {
             // if history is empty, return zero
             if (history.empty())
@@ -65,7 +65,7 @@ namespace rda
             return history[i].value;
         }
 
-        TNumber Degraded(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
+        TNumber Degraded(const TNumber index = 1'000'000) const
         {
             const size_t i = atol(index.to_string().c_str());
 
