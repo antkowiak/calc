@@ -279,27 +279,27 @@ Expression:
         | FUNC_SQRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_sqrt($3); }
         | FUNC_CBRT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_cbrt($3); }
         
-        | FUNC_ABS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_abs($3); }
-        | FUNC_FLOOR LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_floor($3); }
-        | FUNC_CEIL LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_ceil($3); }
-        | FUNC_ROUND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=calculate_round($3); }
-        | FUNC_HYPOT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=calculate_hypot($3, $5); }
+        | FUNC_ABS LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_abs($3); }
+        | FUNC_FLOOR LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_floor($3); }
+        | FUNC_CEIL LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_ceil($3); }
+        | FUNC_ROUND LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_round($3); }
+        | FUNC_HYPOT LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_hypot($3, $5); }
         
         | FUNC_POW LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_power($3, $5); }
         
-        | FUNC_TGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=tgammal(rda::to_double($3)); }
-        | FUNC_LGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=lgammal(rda::to_double($3)); }
+        | FUNC_TGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_tgamma($3); }
+        | FUNC_LGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_lgamma($3); }
         
-        | FUNC_TRUNC LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=truncl(rda::to_double($3)); }
-        | FUNC_NEARBYINT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=nearbyintl(rda::to_double($3)); }
-        | FUNC_FMOD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmodl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_REMAINDER LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=remainderl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_NEXTAFTER LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=nextafterl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_NEXTTOWARD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=nexttowardl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_FDIM LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fdiml(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_FMAX LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmaxl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_FMIN LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=fminl(rda::to_double($3), rda::to_double($5)); }
-        | FUNC_FMA LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=fmal(rda::to_double($3), rda::to_double($5), rda::to_double($7)); }
+        | FUNC_TRUNC LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_trunc($3); }
+        | FUNC_NEARBYINT LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_nearbyint($3); }
+        | FUNC_FMOD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmod($3, $5); }
+        | FUNC_REMAINDER LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_remainder($3, $5); }
+        | FUNC_NEXTAFTER LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_nextafter($3, $5); }
+        | FUNC_NEXTTOWARD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_nexttoward($3, $5); }
+        | FUNC_FDIM LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fdim($3, $5); }
+        | FUNC_FMAX LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmax($3, $5); }
+        | FUNC_FMIN LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmin($3, $5); }
+        | FUNC_FMA LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fma($3, $5, $7); }
 
         | FUNC_MORT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_mort($3, $5, $7); }
         | FUNC_PMT LEFT_PARENTHESIS Expression COMMA Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_pmt($3, $5, $7, 0.0, 0.0); }

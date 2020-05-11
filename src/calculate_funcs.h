@@ -253,33 +253,77 @@ namespace rda
     {
         return TNumber::abs(n);
     }
+
     static TNumber calculate_floor(const TNumber &n)
     {
         return TNumber::floor(n);
     }
+
     static TNumber calculate_ceil(const TNumber &n)
     {
         return TNumber::ceil(n);
     }
+
     static TNumber calculate_round(const TNumber &n)
     {
         return std::round(rda::to_double(n));
     }
+
     static TNumber calculate_hypot(const TNumber &n1, const TNumber &n2)
     {
         return std::hypot(rda::to_double(n1), rda::to_double(n2));
     }
 
+    static TNumber calculate_tgamma(const TNumber &n)
+    {
+        return std::tgamma(rda::to_double(n));
+    }
 
+    static TNumber calculate_lgamma(const TNumber &n)
+    {
+        return std::lgamma(rda::to_double(n));
+    }
 
-
-
-
-
-
-
-
-
+    static TNumber calculate_trunc(const TNumber &n)
+    {
+        return std::trunc(rda::to_double(n));
+    }
+    static TNumber calculate_nearbyint(const TNumber &n)
+    {
+        return std::nearbyint(rda::to_double(n));
+    }
+    static TNumber calculate_fmod(const TNumber &n1, const TNumber &n2)
+    {
+        return std::fmod(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_remainder(const TNumber &n1, const TNumber &n2)
+    {
+        return std::remainder(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_nextafter(const TNumber &n1, const TNumber &n2)
+    {
+        return std::nextafter(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_nexttoward(const TNumber &n1, const TNumber &n2)
+    {
+        return std::nexttoward(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_fdim(const TNumber &n1, const TNumber &n2)
+    {
+        return std::fdim(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_fmax(const TNumber &n1, const TNumber &n2)
+    {
+        return std::fmax(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_fmin(const TNumber &n1, const TNumber &n2)
+    {
+        return std::fmin(rda::to_double(n1), rda::to_double(n2));
+    }
+    static TNumber calculate_fma(const TNumber &n1, const TNumber &n2, const TNumber &n3)
+    {
+        return std::fma(rda::to_double(n1), rda::to_double(n2), rda::to_double(n3));
+    }
 
     static TNumber calculate_mort(const TNumber &principal,
                            const TNumber &interest_rate,
