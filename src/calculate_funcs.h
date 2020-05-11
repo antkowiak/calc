@@ -192,9 +192,10 @@ namespace rda
         return std::lgamma(rda::to_double(n));
     }
 
-    static TNumber calculate_trunc(const TNumber &n)
+    static TNumber calculate_trunc(const TNumber &n, const TNumber &precision)
     {
-        return TNumber::truncate_precision(n, 0);
+        const size_t p = static_cast<size_t>(std::atol(TNumber::truncate_precision(precision.abs(), 0).to_string().c_str()));
+        return TNumber::truncate_precision(n, p);
     }
 
     static TNumber calculate_nearbyint(const TNumber &n)
@@ -575,6 +576,7 @@ namespace rda
         printf("tgamma(x)        - calculate the gamma function of x\n");
         printf("lgamma(x)        - calculate the nat log of the abs value of the gamma function\n");
         printf("trunc(x)         - truncate to integer value\n");
+        printf("trunc(x,p)       - truncate p decimal places\n");
         printf("nearbyint(x)     - round to integral value in floating-point format\n");
         printf("fmod(x)          - floating point remainder function\n");
         printf("remainder(x,y)   - floating point remainder function\n");

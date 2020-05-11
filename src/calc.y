@@ -322,7 +322,8 @@ Expression:
         | FUNC_TGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_tgamma($3); }
         | FUNC_LGAMMA LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_lgamma($3); }
         
-        | FUNC_TRUNC      LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_trunc($3); }
+        | FUNC_TRUNC      LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_trunc($3, 0); }
+        | FUNC_TRUNC      LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_trunc($3, $5); }
         | FUNC_NEARBYINT  LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_nearbyint($3); }
         | FUNC_FMOD       LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmod($3, $5); }
         | FUNC_REMAINDER  LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_remainder($3, $5); }
