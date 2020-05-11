@@ -106,13 +106,48 @@ namespace rda
 
     static TNumber calculate_power_helper(const TNumber &base, const TNumber &expon)
     {
-        if (expon.is_whole_number() && expon > TNumber(0))
+        // if the base is zero, return zero
+        if (base == TNumber(0))
+            return TNumber(0);
+
+        // if anything raised to the zero power, return 1
+        if (expon == TNumber(0))
         {
-            TNumber total = 1;
-            for (TNumber i(0); i < expon; ++i)
-                total = total * base;
-            return total;
+            return TNumber(1);
         }
+
+        // if the exponent is awhole number, try to avoid degraded precision
+        if (expon.is_whole_number())
+        {
+            // positive exponent, just multiply the base over and over again
+            if (expon > TNumber(0))
+            {
+                TNumber total = 1;
+                for (TNumber i(0); i < expon; ++i)
+                    total = total * base;
+                return total;
+            }
+            else if (expon < TNumber(0))
+            {
+                // negative exponent. Multiple the base the corect number of times
+                TNumber total = 1;
+                for (TNumber i(0); i > expon; --i)
+                    total = total * base;
+
+                // truncate to 20 decimal places to avoid bad performance
+                TNumber t = TNumber::truncate_precision(total, 20);
+
+                // if the truncation changed the value of the total, trip the degraded flag
+                if (t != total)
+                    rda::GlobalData::Instance().SetDegraded();
+
+                // return 1/x for negative exponents
+                return (TNumber(1) / t);
+            }
+        }
+
+        // exponent was not a whole number.. Just call the standard libary function
+        // and live with degredaded precision.
 
         double dbase = rda::to_double(base);
         double dexpon = rda::to_double(expon);

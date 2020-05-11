@@ -239,12 +239,9 @@ namespace rda
                                   const TNumber &interest_rate,
                                   const TNumber &num_years)
     {
-        TNumber monthlyInterest = interest_rate / TNumber(12.0);
-        double months = rda::to_double(num_years) * 12.0;
-        TNumber monthlyPayment =
-            principal * (monthlyInterest /
-                         (TNumber(1) - powl((1.0 + rda::to_double(monthlyInterest)),
-                                            (0.0 - months))));
+        TNumber monthlyInterest = interest_rate / TNumber(12);
+        TNumber months = num_years * TNumber(12);
+        TNumber monthlyPayment = principal * (monthlyInterest / (TNumber(1) - rda::calculate_power_helper(monthlyInterest + 1, -months)));
 
         return monthlyPayment;
     }
