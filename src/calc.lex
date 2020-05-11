@@ -3,6 +3,7 @@
 #include "global.h"
 #include "calculate_funcs.h"
 #include "calc.tab.h"
+#include "parse_helper_funcs.h"
 
 %}
 
@@ -120,118 +121,39 @@ func_quit       ([Ee][Xx][Ii][Tt])|([Qq][Uu][Ii][Tt])|([Qq])
 
 factorial       {integer}!
 percentage      ({pointreal}|{real})\%
-
-p_metric        ({pointreal}|{real})[Pp]
-n_metric        ({pointreal}|{real})[Nn]
-u_metric        ({pointreal}|{real})[Uu]
-m_metric        ({pointreal}|{real})m
-k_metric        ({pointreal}|{real})[Kk]
-M_metric        ({pointreal}|{real})M
-g_metric        ({pointreal}|{real})[Gg]
-t_metric        ({pointreal}|{real})[Tt]
+metric          ({pointreal}|{real})[PpNnUuMmKkGgTt]
 
 %%
 
 {white}         {}
 
 {real}          {
-                    yylval=TNumber(yytext);
+                    yylval = rda::parse_helper_real(yytext);
                     return(NUMBER);
                 }
 
 {pointreal}     {
-                    yylval=TNumber(yytext);
+                    yylval=rda::parse_helper_real(yytext);
                     return(NUMBER);
                 }
 
 {factorial}     {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, '!');
-
-                    yylval = rda::calculate_factorial(TNumber(text));
+                    yylval = rda::parse_helper_factorial(yytext);
                     return(NUMBER);
                 }
 
 {percentage}    {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, '%');
-
-                    yylval = TNumber(text) / TNumber(100);
+                    yylval = rda::parse_helper_percent(yytext);
                     return(NUMBER);
                 }
 
-{p_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'P');
-                    rda::remove_chars_helper(text, 'p');
-
-                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000) / TNumber(1000);
-                    return(NUMBER);
-                }
-
-{n_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'N');
-                    rda::remove_chars_helper(text, 'n');
-
-                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000) / TNumber(1000);
-                    return(NUMBER);
-                }
-
-{u_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'U');
-                    rda::remove_chars_helper(text, 'u');
-
-                    yylval = TNumber(text) / TNumber(1000) / TNumber(1000);
-                    return(NUMBER);
-                }
-
-{m_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'm');
-
-                    yylval = TNumber(text) / TNumber(1000);
-                    return(NUMBER);
-                }
-
-{k_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'K');
-                    rda::remove_chars_helper(text, 'k');
-
-                    yylval = TNumber(text) * TNumber(1000);
-                    return(NUMBER);
-                }
-
-{M_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'M');
-
-                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000);
-                    return(NUMBER);
-                }
-
-{g_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'G');
-                    rda::remove_chars_helper(text, 'g');
-
-                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000);
-                    return(NUMBER);
-                }
-
-{t_metric}      {
-                    std::string text(yytext);
-                    rda::remove_chars_helper(text, 'T');
-                    rda::remove_chars_helper(text, 't');
-
-                    yylval = TNumber(text) * TNumber(1000) * TNumber(1000) * TNumber(1000) * TNumber(1000);
+{metric}        {
+                    yylval = rda::parse_helper_metric(yytext);
                     return(NUMBER);
                 }
 
 {n_pi}          {
-                    yylval = rda::calculate_pi_times_str(yytext);
+                    yylval = rda::parse_helper_pi_times(yytext);
                     return (NUMBER);
                 }
 

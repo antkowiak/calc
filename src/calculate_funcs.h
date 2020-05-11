@@ -18,26 +18,12 @@ namespace rda
 
     static TNumber calculate_pi()
     {
-        return TNumber("3.1415926535897932384626433832795");
-    }
-
-    static TNumber calculate_pi_times_str(const std::string &s)
-    {
-        std::string text(s);
-
-        rda::remove_chars_helper(text, 'P');
-        rda::remove_chars_helper(text, 'p');
-        rda::remove_chars_helper(text, 'I');
-        rda::remove_chars_helper(text, 'i');
-
-        TNumber n(text);
-
-        return n * calculate_pi();
+        return rda::pi_helper();
     }
 
     static TNumber calculate_pi_times_n(const TNumber &n)
     {
-        return (calculate_pi() * n);
+        return (rda::pi_helper() * n);
     }
 
     static TNumber calculate_plus(const TNumber &n1, const TNumber n2)

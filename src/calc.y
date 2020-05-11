@@ -406,6 +406,7 @@ int main(int argc, char *argv[])
             if (argv[i] != nullptr)
                 ss << argv[i];
 
+        rda::GlobalData::Instance().SetCurrentStr(ss.str());
         ss << std::endl;       
         yy_scan_string(ss.str().c_str());
         yyparse();

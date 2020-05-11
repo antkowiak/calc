@@ -84,4 +84,9 @@ namespace rda
             pos = str.find(c);
         }
     }
+
+    static TNumber pi_helper()
+    {
+        return TNumber("3.1415926535897932384626433832795");
+    }
 } // namespace rda
