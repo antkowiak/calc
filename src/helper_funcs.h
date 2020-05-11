@@ -20,7 +20,7 @@ namespace rda
     {
         return TNumber(s);
     }
-
+    
     static long long to_int(const TNumber &n)
     {
         GlobalData::Instance().SetDegraded();
@@ -70,23 +70,6 @@ namespace rda
             retVal = retVal * i;
 
         return retVal;
-    }
-
-    static TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
-                                        const TNumber &yearsToMaturity,
-                                        const TNumber &parValue,
-                                        const TNumber &proposedRate)
-    {
-        long long ytm_i = rda::to_int(yearsToMaturity);
-
-        TNumber price(0);
-        for (long long i = 1; i <= ytm_i; ++i)
-            price += (annualCouponPayment *
-                      std::pow(rda::to_double(proposedRate + TNumber(1)), (i * -1)));
-
-        price += parValue * std::pow(rda::to_double(proposedRate + TNumber(1)),
-                                     rda::to_double(yearsToMaturity * TNumber(-1)));
-        return price;
     }
 
     static void remove_chars_helper(std::string &str, const char c)
@@ -153,6 +136,21 @@ namespace rda
         double dexpon = rda::to_double(expon);
         double dresult = powl(dbase, dexpon);
         return TNumber(dresult);
+    }
+
+    static TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
+                                        const TNumber &yearsToMaturity,
+                                        const TNumber &parValue,
+                                        const TNumber &proposedRate)
+    {
+        TNumber price(0);
+
+        for (TNumber i(1); i <= yearsToMaturity; ++i)
+            price += annualCouponPayment * rda::calculate_power_helper(proposedRate + 1, i * -1);
+
+        price += parValue * rda::calculate_power_helper(proposedRate + 1, yearsToMaturity * -1);
+
+        return price;
     }
 
 } // namespace rda

@@ -289,15 +289,15 @@ namespace rda
 
     static TNumber calculate_rand(const TNumber &a)
     {
-        if (a == 0.0)
-            return rand();
+        if (a == TNumber(0))
+            return TNumber(rand());
 
-        return rand() % (rda::to_int(a));
+        return rand() % std::atoll(a.round().to_string().c_str());
     }
 
     static TNumber calculate_srand(const TNumber &a)
     {
-        srand(static_cast<unsigned long long>(rda::to_int(a)));
+        srand(static_cast<unsigned long long>(atoll(a.round().to_string().c_str())));
         return TNumber(1);
     }
 
@@ -308,39 +308,32 @@ namespace rda
 
     static TNumber calculate_npr(const TNumber &n, const TNumber &r)
     {
-        unsigned long long ni = static_cast<unsigned long long>(rda::to_int(n));
-        unsigned long long ri = static_cast<unsigned long long>(rda::to_int(r));
+        if (r > n)
+            return calculate_factorial_helper(n);
 
-        if (ri > ni)
-            return calculate_factorial_helper(ni);
+        TNumber total(1);
 
-        unsigned long long total = 1;
+        const auto dif = n - r;
 
-        unsigned long long i = ni;
-        for (; i > (ni - ri); --i)
-        {
+        for (TNumber i(n); i > dif ; --i)
             total *= i;
-        }
 
         return TNumber(total);
     }
 
     static TNumber calculate_ncr(const TNumber &n, const TNumber &r)
     {
-        unsigned long long ni = static_cast<unsigned long long>(rda::to_int(n));
-        unsigned long long ri = static_cast<unsigned long long>(rda::to_int(r));
-
-        return ((calculate_npr(ni, ri) / calculate_factorial_helper(ri)));
+        return ((calculate_npr(n, r) / calculate_factorial_helper(r)));
     }
 
     static TNumber calculate_deg2rad(const TNumber &deg)
     {
-        return ((deg * 3.141592654) / 180.0);
+        return ((deg * rda::pi_helper()) / TNumber(180));
     }
 
     static TNumber calculate_rad2deg(const TNumber &rad)
     {
-        return ((rad * 180.0) / 3.141592654);
+        return ((rad * TNumber(180)) / rda::pi_helper());
     }
 
     static TNumber calculate_gcd(const TNumber &a, const TNumber &b)
@@ -388,18 +381,12 @@ namespace rda
 
     static TNumber calculate_even(const TNumber &n)
     {
-        long long val = rda::to_int(n);
-        if (val % 2 == 0)
-            return TNumber(1);
-        return TNumber(0);
+        return (TNumber::truncate_precision(n, 0) / 2).is_whole_number();
     }
 
     static TNumber calculate_odd(const TNumber &n)
     {
-        long long val = rda::to_int(n);
-        if (val % 2 == 1)
-            return TNumber(1);
-        return TNumber(0);
+        return (!(TNumber::truncate_precision(n, 0) / 2).is_whole_number());
     }
 
     static TNumber calculate_eq(const TNumber &a, const TNumber &b)
@@ -466,12 +453,12 @@ namespace rda
 
     static TNumber calculate_f2c(const TNumber &f)
     {
-        return ((((f - TNumber(32.0)) * TNumber(5)) / TNumber(9)));
+        return ((((f - TNumber(32)) * TNumber(5)) / TNumber(9)));
     }
 
     static TNumber calculate_c2f(const TNumber &c)
     {
-        return ((((TNumber(c) * TNumber(9)) / TNumber(5)) + TNumber(32.0)));
+        return ((((TNumber(c) * TNumber(9)) / TNumber(5)) + TNumber(32)));
     }
 
     static TNumber calculate_ifeq(const TNumber &expr1, const TNumber &expr2, const TNumber &a, const TNumber &b)
