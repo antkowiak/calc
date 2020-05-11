@@ -4,6 +4,3 @@
 * Add support for a list of expressions, and some associated functions....
   ex: sum({2,4,5,7}) = 18
 * Add documentation about what functions are supported
-* Add store(idxNum, value) and recall(idxNum, value) for storing/recalling memory, memory() to show memory()
-
-

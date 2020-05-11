@@ -108,6 +108,11 @@ func_ifgt       [Ii][Ff][Gg][Tt]
 func_ifzero     [Ii][Ff][Zz][Ee][Rr][Oo]
 func_ifnzero    [Ii][Ff][Nn][Zz][Ee][Rr][Oo]
 
+func_store      [Ss][Tt][Oo][Rr][Ee]
+func_recall     [Rr][Ee][Cc][Aa][Ll][Ll]
+func_mem        ([Mm][Ee][Mm])|([Mm][Ee][Mm][Oo][Rr][Yy])
+func_clearmem   ([Cc][Ll][Ee][Aa][Rr][Mm][Ee][Mm])|([Cc][Ll][Ee][Aa][Rr][Mm][Ee][Mm][Oo][Rr][Yy])
+
 func_last       [Ll][Aa][Ss][Tt]
 func_history    [Hh][Ii][Ss][Tt][Oo][Rr][Yy]
 func_help       [Hh][Ee][Ll][Pp]
@@ -324,6 +329,11 @@ t_metric        ({pointreal}|{real})[Tt]
 {func_ifgt}         return(FUNC_IFGT);
 {func_ifzero}       return(FUNC_IFZERO);
 {func_ifnzero}      return(FUNC_IFNZERO);
+
+{func_store}        return(FUNC_STORE);
+{func_recall}       return(FUNC_RECALL);
+{func_mem}          return(FUNC_MEM);
+{func_clearmem}     return(FUNC_CLEARMEM);
 
 {func_last}         return(FUNC_LAST);
 {func_history}      return(FUNC_HISTORY);

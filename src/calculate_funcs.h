@@ -543,6 +543,25 @@ namespace rda
         return b;
     }
 
+    static TNumber calculate_store(const TNumber& key, const TNumber& val)
+    {
+        return rda::GlobalData::Instance().StoreMemory(key, val);
+    }
+
+    static TNumber calculate_recall(const TNumber &key)
+    {
+        return rda::GlobalData::Instance().RecallMemory(key);
+    }
+
+    static TNumber calculate_memory()
+    {
+        return rda::GlobalData::Instance().Memory();
+    }
+
+    static TNumber calculate_clearmemory()
+    {
+        return rda::GlobalData::Instance().ClearMemory();
+    }
 
     static TNumber calculate_last(const TNumber n = TNumber(std::numeric_limits<size_t>::max()))
     {
@@ -642,6 +661,10 @@ namespace rda
         printf("ifgt(e1,e2,a,b) - if (e1>e2),  return a, else b\n");
         printf("ifzero(e,a,b)   - if (e1==0),  return a, else b\n");
         printf("ifnzero(e,a,b)  - if (e1!=0),  return a, else b\n");
+        printf("store(key,val)  - store key,val pair in memory\n");
+        printf("recall(key)     - recall key,val from memory\n");
+        printf("mem()           - prints contents of memory\n");
+        printf("clearmem()      - clears all memory\n");
         printf("last()          - returns prior calculation result\n");
         printf("history()       - prints calculation history\n");
         printf("last(n)         - returns prior calculation result n\n");

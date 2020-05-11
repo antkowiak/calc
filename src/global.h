@@ -4,6 +4,7 @@
 #include <iomanip>
 #include <iostream>
 #include <limits>
+#include <map>
 #include <vector>
 
 #include "arbnumber.h"
@@ -29,6 +30,8 @@ namespace rda
         std::string current_str;
         bool current_degraded = false;
         std::vector<history_element> history;
+
+        std::map<TNumber, TNumber> memory;
 
     public:
         static GlobalData &Instance()
@@ -89,6 +92,34 @@ namespace rda
                           << history[i].value.to_string() << "  ("
                           << history[i].str << ")" << std::endl;
 
+            return TNumber(0);
+        }
+
+        TNumber StoreMemory(const TNumber& key, const TNumber& val)
+        {
+            memory[key] = val;
+            return val;
+        }
+
+        TNumber RecallMemory(const TNumber& key) const
+        {
+            auto iter = memory.find(key);
+            if (iter == memory.end())
+                return TNumber(0);
+            return iter->second;
+        }
+
+        TNumber ClearMemory()
+        {
+            memory.clear();
+            return TNumber(0);
+        }
+
+        TNumber Memory() const
+        {
+            for (auto iter = memory.cbegin(); iter != memory.cend(); ++iter)
+                std::cout << "memory[" << iter->first << "] = " << iter->second << std::endl;
+        
             return TNumber(0);
         }
     };
