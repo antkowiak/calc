@@ -1,5 +1,6 @@
 #pragma once
 
+#include <algorithm>
 #include <cmath>
 #include <ctime>
 #include <limits>
@@ -338,45 +339,47 @@ namespace rda
 
     static TNumber calculate_gcd(const TNumber &a, const TNumber &b)
     {
-        long long imin =
-            (long long)fminl(fabsl(rda::to_double(a)), fabsl(rda::to_double(b)));
-        long long imax =
-            (long long)fmaxl(fabsl(rda::to_double(a)), fabsl(rda::to_double(b)));
+        TNumber aa(TNumber::truncate_precision(a, 0).abs());
+        TNumber bb(TNumber::truncate_precision(b, 0).abs());
 
-        if (imin == 0 || imax == 0)
+        if (aa.is_zero() || bb.is_zero())
             return TNumber(0);
 
-        unsigned long long d = imin;
-        for (; d >= 1; --d)
-        {
-            if ((imin % d == 0) && (imax % d == 0))
-            {
-                return TNumber(d);
-            }
-        }
+        if (aa == bb)
+            return aa;
+
+        if (aa > bb)
+            std::swap(aa, bb);
+
+        for (TNumber d(aa) ; d >= 1; --d)
+            if ( (aa / d).is_whole_number() && (bb / d).is_whole_number() )
+                return d;
 
         return TNumber(1);
     }
 
     static TNumber calculate_lcm(const TNumber &a, const TNumber &b)
     {
-        long long ai = rda::to_int(a);
-        long long bi = rda::to_int(b);
+        TNumber aa(TNumber::truncate_precision(a, 0).abs());
+        TNumber bb(TNumber::truncate_precision(b, 0).abs());
 
-        if (ai == 0 || bi == 0)
+        if (aa == 0 || bb == 0)
             return TNumber(0);
 
-        long long multiple = ai;
+        if (aa == bb)
+            return aa;
 
-        while (multiple >= ai)
+        TNumber multiple = aa;
+
+        while (multiple >= aa)
         {
-            if (multiple % bi == 0)
+            if ((multiple / bb).is_whole_number())
                 return TNumber(multiple);
 
-            multiple += ai;
+            multiple += aa;
         }
 
-        return TNumber(0);
+        return aa * bb;
     }
 
     static TNumber calculate_even(const TNumber &n)

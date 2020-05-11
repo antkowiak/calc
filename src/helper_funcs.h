@@ -20,14 +20,6 @@ namespace rda
     {
         return TNumber(s);
     }
-    
-    static long long to_int(const TNumber &n)
-    {
-        GlobalData::Instance().SetDegraded();
-        long long l = std::atoll(n.to_string().c_str());
-        // TODO error check against too big. Trip a loss of precision flag
-        return l;
-    }
 
     static double to_double(const TNumber &n)
     {
