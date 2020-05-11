@@ -7,89 +7,10 @@
 
 #include "arbnumber.h"
 #include "global.h"
+#include "helper_funcs.h"
 
 namespace rda
 {
-    //////////////////////////////////////////////////////////////////////
-    static TNumber from_double(const double d)
-    {
-        GlobalData::Instance().SetDegraded();
-        return TNumber(d);
-    }
-
-    static TNumber from_string(const std::string &s)
-    {
-        return TNumber(s);
-    }
-
-    static long long to_int(const TNumber &n)
-    {
-        GlobalData::Instance().SetDegraded();
-        long long l = atoll(n.to_string().c_str());
-        // TODO error check against too big. Trip a loss of precision flag
-        return l;
-    }
-
-    static double to_double(const TNumber &n)
-    {
-        GlobalData::Instance().SetDegraded();
-        double d = atof(n.to_string().c_str());
-        // TODO error check against too big. Trip a loss of precision flag
-        return d;
-    }
-
-    //////////////////////////////////////////////////////////////////////
-    static std::string to_string(const TNumber &n)
-    {
-        return n.to_string();
-    }
-
-    //////////////////////////////////////////////////////////////////////
-    static void print_expression(const TNumber &n)
-    {
-        GlobalData::Instance().StoreHistory(n);
-        std::cout << n << std::endl;
-    }
-
-    //////////////////////////////////////////////////////////////////////
-    static TNumber calculate_factorial_helper(const TNumber &n)
-    {
-        TNumber retVal(1);
-
-        for (TNumber i(1); i <= n; ++i)
-            retVal = retVal * i;
-
-        return retVal;
-    }
-
-    static TNumber calculate_ytm_helper(const TNumber &annualCouponPayment,
-                                 const TNumber &yearsToMaturity,
-                                 const TNumber &parValue,
-                                 const TNumber &proposedRate)
-    {
-        long long ytm_i = rda::to_int(yearsToMaturity);
-
-        TNumber price(0);
-        for (long long i = 1; i <= ytm_i; ++i)
-            price += (annualCouponPayment *
-                      pow(rda::to_double(proposedRate + TNumber(1)), (i * -1)));
-
-        price += parValue * pow(rda::to_double(proposedRate + TNumber(1)),
-                                rda::to_double(yearsToMaturity * TNumber(-1)));
-        return price;
-    }
-
-    static void remove_chars_helper(std::string & str, const char c)
-    {
-        auto pos = str.find(c);
-        while (pos != std::string::npos)
-        {
-            str.erase(pos);
-            pos = str.find(c);
-        }
-    }
-
-    //////////////////////////////////////////////////////////////////////
     static TNumber calculate_lone_number(const TNumber &n)
     {
         return n;
@@ -119,7 +40,7 @@ namespace rda
         return (calculate_pi() * n);
     }
 
-    static TNumber calculate_plus(const TNumber & n1, const TNumber n2)
+    static TNumber calculate_plus(const TNumber &n1, const TNumber n2)
     {
         return n1 + n2;
     }
@@ -184,7 +105,7 @@ namespace rda
         return std::atan(rda::to_double(n));
     }
 
-    static TNumber calculate_atan2(const TNumber &n1, const TNumber & n2)
+    static TNumber calculate_atan2(const TNumber &n1, const TNumber &n2)
     {
         return std::atan2(rda::to_double(n1), rda::to_double(n2));
     }
@@ -326,8 +247,8 @@ namespace rda
     }
 
     static TNumber calculate_mort(const TNumber &principal,
-                           const TNumber &interest_rate,
-                           const TNumber &num_years)
+                                  const TNumber &interest_rate,
+                                  const TNumber &num_years)
     {
         TNumber monthlyInterest = interest_rate / TNumber(12.0);
         double months = rda::to_double(num_years) * 12.0;
@@ -340,10 +261,10 @@ namespace rda
     }
 
     static TNumber calculate_pmt(const TNumber &r,
-                          const TNumber &nper,
-                          const TNumber &pv,
-                          const TNumber &fv,
-                          const TNumber &type)
+                                 const TNumber &nper,
+                                 const TNumber &pv,
+                                 const TNumber &fv,
+                                 const TNumber &type)
     {
         TNumber q = rda::from_double(
             powl(rda::to_double(TNumber(1) + r), rda::to_double(nper)));
@@ -352,9 +273,9 @@ namespace rda
     }
 
     static TNumber calculate_ytm(const TNumber &couponRate,
-                          const TNumber &yearsToMaturity,
-                          const TNumber &parValue,
-                          const TNumber &price)
+                                 const TNumber &yearsToMaturity,
+                                 const TNumber &parValue,
+                                 const TNumber &price)
     {
         TNumber yrs = roundl(rda::to_double(yearsToMaturity));
         TNumber annualCouponPayment = couponRate * parValue;
@@ -679,18 +600,18 @@ namespace rda
         return calculate_factorial_helper(n);
     }
 
-    static TNumber calculate_negation(const TNumber & n)
+    static TNumber calculate_negation(const TNumber &n)
     {
         TNumber r = n * TNumber(-1);
         return r;
     }
 
-    static TNumber calculate_power(const TNumber & base, const TNumber & expon)
+    static TNumber calculate_power(const TNumber &base, const TNumber &expon)
     {
         if (expon.is_whole_number() && expon > TNumber(0))
         {
             TNumber total = 1;
-            for (TNumber i(0) ; i < expon ; ++i)
+            for (TNumber i(0); i < expon; ++i)
                 total = total * base;
             return total;
         }

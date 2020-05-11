@@ -19,7 +19,6 @@ namespace rda
     class GlobalData
     {
     private:
-
         struct history_element
         {
             std::string str;
@@ -32,67 +31,65 @@ namespace rda
         std::vector<history_element> history;
 
     public:
-
-            static GlobalData & Instance()
-            {
-                static GlobalData gd;
-                return gd;
-            }
+        static GlobalData &Instance()
+        {
+            static GlobalData gd;
+            return gd;
+        }
 
     public:
+        void SetCurrentStr(const std::string &str)
+        {
+            current_str = str;
+        }
 
-            void SetCurrentStr(const std::string &str)
-            {
-                current_str = str;
-            }
+        void SetDegraded()
+        {
+            current_degraded = true;
+        }
 
-            void SetDegraded()
-            {
-                current_degraded = true;
-            }
-
-            TNumber Last(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
-            {
-                // if history is empty, return zero
-                if (history.empty())
-                    return TNumber(0);
-
-                // convert the index to a size_t
-                size_t i = atol(index.to_string().c_str());
-
-                // cap the index to end of vector
-                i = std::min(i, history.size() - 1);
-
-                return history[i].value;                
-            }
-
-            TNumber Degraded(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
-            {
-                const size_t i = atol(index.to_string().c_str());
-
-                if (i >= history.size())
-                    return TNumber(0);
-
-                return ((history[i].degraded == true) ? TNumber(1) : TNumber(0));
-            }
-
-            void StoreHistory(const TNumber & n)
-            {
-                history.push_back(history_element {current_str, n, current_degraded});
-                current_str = "";
-                current_degraded = false;
-            }
-
-            TNumber History() const
-            {
-                for (size_t i = 0; i < history.size(); ++i)
-                    std::cout << "degraded = " << std::left
-                              << ((history[i].degraded) ? "true, " : "false,")
-                              << "  history[" << i << "] = "
-                              << history[i].value.to_string() << "  ("
-                              << history[i].str << ")" << std::endl;
-
+        TNumber Last(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
+        {
+            // if history is empty, return zero
+            if (history.empty())
                 return TNumber(0);
-            }
+
+            // convert the index to a size_t
+            size_t i = atol(index.to_string().c_str());
+
+            // cap the index to end of vector
+            i = std::min(i, history.size() - 1);
+
+            return history[i].value;
+        }
+
+        TNumber Degraded(const TNumber index = TNumber(std::numeric_limits<size_t>::max())) const
+        {
+            const size_t i = atol(index.to_string().c_str());
+
+            if (i >= history.size())
+                return TNumber(0);
+
+            return ((history[i].degraded == true) ? TNumber(1) : TNumber(0));
+        }
+
+        void StoreHistory(const TNumber &n)
+        {
+            history.push_back(history_element{current_str, n, current_degraded});
+            current_str = "";
+            current_degraded = false;
+        }
+
+        TNumber History() const
+        {
+            for (size_t i = 0; i < history.size(); ++i)
+                std::cout << "degraded = " << std::left
+                          << ((history[i].degraded) ? "true, " : "false,")
+                          << "  history[" << i << "] = "
+                          << history[i].value.to_string() << "  ("
+                          << history[i].str << ")" << std::endl;
+
+            return TNumber(0);
+        }
     };
-}
+} // namespace rda
