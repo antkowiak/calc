@@ -77,8 +77,6 @@ extern FILE* yyin;
 %token  FUNC_NEARBYINT
 %token  FUNC_FMOD
 %token  FUNC_REMAINDER
-%token  FUNC_NEXTAFTER
-%token  FUNC_NEXTTOWARD
 %token  FUNC_FDIM
 %token  FUNC_FMAX
 %token  FUNC_FMIN
@@ -187,8 +185,6 @@ extern FILE* yyin;
 %left   FUNC_NEARBYINT
 %left   FUNC_FMOD
 %left   FUNC_REMAINDER
-%left   FUNC_NEXTAFTER
-%left   FUNC_NEXTTOWARD
 %left   FUNC_FDIM
 %left   FUNC_FMAX
 %left   FUNC_FMIN
@@ -318,8 +314,6 @@ Expression:
         | FUNC_NEARBYINT  LEFT_PARENTHESIS Expression RIGHT_PARENTHESIS { $$=rda::calculate_nearbyint($3); }
         | FUNC_FMOD       LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmod($3, $5); }
         | FUNC_REMAINDER  LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_remainder($3, $5); }
-        | FUNC_NEXTAFTER  LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_nextafter($3, $5); }
-        | FUNC_NEXTTOWARD LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_nexttoward($3, $5); }
         | FUNC_FDIM       LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fdim($3, $5); }
         | FUNC_FMAX       LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmax($3, $5); }
         | FUNC_FMIN       LEFT_PARENTHESIS Expression COMMA Expression RIGHT_PARENTHESIS { $$=rda::calculate_fmin($3, $5); }

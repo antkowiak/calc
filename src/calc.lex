@@ -60,8 +60,6 @@ func_trunc      [Tt][Rr][Uu][Nn][Cc][lf]?
 func_nearbyint  [Nn][Ee][Aa][Rr][Bb][Yy][Ii][Nn][Tt][lf]?
 func_fmod       [Ff][Mm][Oo][Dd][lf]?
 func_remainder  [Rr][Ee][Mm][Aa][Ii][Nn][Dd][Ee][Rr][lf]?
-func_nextafter  [Nn][Ee][Xx][Tt][Aa][Ff][Tt][Ee][Rr][lf]?
-func_nexttoward [Nn][Ee][Xx][Tt][Tt][Oo][Ww][Aa][Rr][Dd][lf]?
 func_fdim       [Ff][Dd][Ii][Mm][lf]?
 func_fmax       [Ff]?[Mm][Aa][Xx][lf]?
 func_fmin       [Ff]?[Mm][Ii][Nn][lf]?
@@ -203,8 +201,6 @@ metric          ({pointreal}|{real})[PpNnUuMmKkGgTt]
 {func_nearbyint}    return(FUNC_NEARBYINT);
 {func_fmod}         return(FUNC_FMOD);
 {func_remainder}    return(FUNC_REMAINDER);
-{func_nextafter}    return(FUNC_NEXTAFTER);
-{func_nexttoward}   return(FUNC_NEXTTOWARD);
 {func_fdim}         return(FUNC_FDIM);
 {func_fmax}         return(FUNC_FMAX);
 {func_fmin}         return(FUNC_FMIN);

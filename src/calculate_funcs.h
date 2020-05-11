@@ -211,16 +211,6 @@ namespace rda
         return std::remainder(rda::to_double(n1), rda::to_double(n2));
     }
 
-    static TNumber calculate_nextafter(const TNumber &n1, const TNumber &n2)
-    {
-        return std::nextafter(rda::to_double(n1), rda::to_double(n2));
-    }
-
-    static TNumber calculate_nexttoward(const TNumber &n1, const TNumber &n2)
-    {
-        return std::nexttoward(rda::to_double(n1), rda::to_double(n2));
-    }
-
     static TNumber calculate_fdim(const TNumber &n1, const TNumber &n2)
     {
         return std::fdim(rda::to_double(n1), rda::to_double(n2));
@@ -592,20 +582,15 @@ namespace rda
         printf("sqrt(x)         - square root function\n");
         printf("cbrt(x)         - cube root function\n");
         printf("abs(x)          - absolute value function\n");
-        printf(
-            "floor(x)        - round to largest integral value not greater than x\n");
-        printf(
-            "ceil(x)         - round to smallest integral value not less than x\n");
-        printf("round(x)        - round to integral value, regarldess of rounding "
-               "direction\n");
+        printf("floor(x)        - round to largest integral value not greater than x\n");
+        printf("ceil(x)         - round to smallest integral value not less than x\n");
+        printf("round(x)        - round to integral value\n");
         printf("hypot(x,y)      - euclidean distance function\n");
         printf("pow(x,y)        - power function\n");
         printf("tgamma(x)       - calculate the gamma function of x\n");
-        printf("lgamma(x)       - calculate the nat log of the abs value of the "
-               "gamma function\n");
+        printf("lgamma(x)       - calculate the nat log of the abs value of the gamma function\n");
         printf("trunc(x)        - truncate to integer value\n");
-        printf(
-            "nearbyint(x)    - round to integral value in floating-point format\n");
+        printf("nearbyint(x)    - round to integral value in floating-point format\n");
         printf("fmod(x)         - floating point remainder function\n");
         printf("remainder(x,y)  - floating point remainder function\n");
         printf("fdim(x,y)       - return the difference if positive, 0 otherwise\n");
@@ -627,14 +612,12 @@ namespace rda
         printf("lcm(x,y)        - compute least common multiple\n");
         printf("even(x)         - returns 1 if x is even, 0 otherwise\n");
         printf("odd(x)          - returns 1 if x is odd, 0 otherwise\n");
-        printf("eq(x,y)         - returns 1 if x is equal to y, 0 otherwise\n");
-        printf("ne(x,y)         - returns 1 if x is not equal to y, 0 otherwise\n");
-        printf("lt(x,y)         - returns 1 if x is less than y, 0 otherwise\n");
-        printf("le(x,y)         - returns 1 if x is less than or equal to y, 0 "
-               "otherwise\n");
-        printf("gt(x,y)         - returns 1 if x is greater than y, 0 otherwise\n");
-        printf("ge(x,y)         - returns 1 if x is greater than or equal to y, 0 "
-               "otherwise\n");
+        printf("eq(x,y)         - returns 1 if x == y, 0 otherwise\n");
+        printf("ne(x,y)         - returns 1 if x != y, 0 otherwise\n");
+        printf("lt(x,y)         - returns 1 if x <  y, 0 otherwise\n");
+        printf("le(x,y)         - returns 1 if x <= y, 0 otherwise\n");
+        printf("gt(x,y)         - returns 1 if x >  y, 0 otherwise\n");
+        printf("ge(x,y)         - returns 1 if x >= y, 0 otherwise\n");
         printf("true()          - returns 1\n");
         printf("false()         - returns 0\n");
         printf("zero()          - returns 0\n");
