@@ -1,9 +1,11 @@
+
 %{
 
 #include "global.h"
 #include "calculate_funcs.h"
-#include "calc.tab.h"
 #include "parse_helper_funcs.h"
+
+#include "calc.tab.h"
 
 %}
 
